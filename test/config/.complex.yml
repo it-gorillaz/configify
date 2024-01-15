@@ -1,0 +1,12 @@
+any-key: any-value
+expanded-key: ${aws-secrets-manager.secret}
+json-content: |
+  {
+    "host": "localhost"
+  }
+
+aws-secrets-manager:
+  secret: secret-id
+
+aws-parameter-store:
+  secret: parameter-name
