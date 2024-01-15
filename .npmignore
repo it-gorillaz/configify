@@ -1,0 +1,23 @@
+# test
+test
+coverage
+
+# git
+.gitignore
+.git
+
+# build tools
+.travis.yml
+.jenkins.yml
+.codeclimate.yml
+.jenkins
+.github
+
+# linters
+.jscsrc
+.jshintrc
+.eslintrc*
+
+# editor settings
+.idea
+.editorconfig
