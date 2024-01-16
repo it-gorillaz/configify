@@ -19,9 +19,6 @@
     "url": "https://github.com/it-gorillaz/configfy/issues"
   },
   "homepage": "https://github.com/it-gorillaz/configfy#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
