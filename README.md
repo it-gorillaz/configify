@@ -32,8 +32,8 @@ By default, when bootstraping, the module will lookup for a `.env` or an `applic
 
 ```
 my-web-app
-  .env
-  application.yml
+| .env
+| application.yml
 ```
 You can also provide the location of the configuration files by overring the configuration options.
 
@@ -58,7 +58,7 @@ export class ApplicationClientConfig {
 }
 ```
 
-Example of an `.yml` file mapped to a class:
+Example of a `.yml` file mapped to a class:
 
 ```
 database:
