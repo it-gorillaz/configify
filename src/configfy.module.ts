@@ -180,20 +180,20 @@ export class ConfigfyModule {
   }
 
   /**
-   * Reduces a nested object into an one level key value pair object
+   * Flattens a nested object into an one level key value pair object
    *
    * @param {object}              source the source object
    * @param {string[]}            path   the key path
    * @param {Record<string, any>} target the target object
    */
-  private static reduceToKeyValuePairs(
+  private static flattenObjectKeys(
     source: any,
     path: string[] = [],
     target: Record<string, any> = {},
   ) {
     if (typeof source === 'object') {
       for (const key in source) {
-        this.reduceToKeyValuePairs(source[key], [...path, key], target);
+        this.flattenObjectKeys(source[key], [...path, key], target);
       }
     } else {
       target[path.join('.')] = source;
@@ -216,7 +216,7 @@ export class ConfigfyModule {
       Object.assign(config, parsed);
     }
 
-    this.reduceToKeyValuePairs(config, [], kv);
+    this.flattenObjectKeys(config, [], kv);
 
     return kv;
   }
