@@ -1,6 +1,6 @@
 {
   "name": "@itgorillaz/configfy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "NestJS Config on Steroids",
   "author": "tommelo",
   "private": false,
