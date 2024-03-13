@@ -1,0 +1,13 @@
+{
+  "nested": {
+    "any-key": "any-value"
+  },
+  "default-value": "${non.existing.key:-my-default-value}",
+  "expanded-secret": "${aws-secrets-manager.secret}",
+  "aws-secrets-manager": {
+    "secret": "secret-id"
+  },
+  "aws-parameter-store": {
+    "secret": "parameter-name"
+  }
+}

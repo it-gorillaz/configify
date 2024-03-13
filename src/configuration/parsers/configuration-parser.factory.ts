@@ -1,5 +1,6 @@
 import { ConfigurationParser } from '../configuration-parser.interface';
 import { DotEnvConfigurationParser } from './dotenv-configuration.parser';
+import { JsonConfigurationParser } from './json-configuration.parser';
 import { YamlConfigurationParser } from './yaml-configuration.parser';
 
 /**
@@ -15,6 +16,7 @@ export class ConfigurationParserFactory {
     env: new DotEnvConfigurationParser(),
     yml: new YamlConfigurationParser(),
     yaml: new YamlConfigurationParser(),
+    json: new JsonConfigurationParser(),
   };
 
   /**

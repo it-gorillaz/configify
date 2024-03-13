@@ -36,12 +36,13 @@ export class ConfigfyModule {
   /**
    * The default configuration files.
    * If no configuration files are provided this module will
-   * lookup at a .env and an application.yml files at the root
-   * path of the project.
+   * lookup at a .env, application.yml and an application.json files
+   * at the root path of the project.
    */
   private static readonly DEFAULT_CONFIG_FILES = [
     resolve(process.cwd(), '.env'),
     resolve(process.cwd(), 'application.yml'),
+    resolve(process.cwd(), 'application.json'),
   ];
 
   /**
