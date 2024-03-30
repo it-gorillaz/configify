@@ -5,12 +5,12 @@ import {
 } from './mock/aws.mock';
 import { ValueProvider } from '@nestjs/common';
 import { resolve } from 'path';
-import { ConfigfyModule } from '../src';
+import { ConfigifyModule } from '../src';
 import { ComplexDotEnvConfiguration } from './config/complex-dot-env.configuration';
 import { ComplexJsonConfiguration } from './config/complex-json.configuration';
 import { ComplexYmlConfiguration } from './config/complex-yml.configuration';
 
-describe('ConfigfyModule', () => {
+describe('ConfigifyModule', () => {
   beforeEach(() => {
     secretsManagerSendMock.mockReset();
     systemsManagerSendMock.mockReset();
@@ -30,7 +30,7 @@ describe('ConfigfyModule', () => {
       });
 
       const file = resolve(process.cwd(), 'test/config/.complex.env');
-      const module = await ConfigfyModule.forRootAsync({
+      const module = await ConfigifyModule.forRootAsync({
         configFilePath: file,
       });
 
@@ -60,7 +60,7 @@ describe('ConfigfyModule', () => {
       });
 
       const file = resolve(process.cwd(), 'test/config/.complex.yml');
-      const module = await ConfigfyModule.forRootAsync({
+      const module = await ConfigifyModule.forRootAsync({
         configFilePath: file,
       });
 
@@ -90,7 +90,7 @@ describe('ConfigfyModule', () => {
       });
 
       const file = resolve(process.cwd(), 'test/config/.complex.json');
-      const module = await ConfigfyModule.forRootAsync({
+      const module = await ConfigifyModule.forRootAsync({
         configFilePath: file,
       });
 
