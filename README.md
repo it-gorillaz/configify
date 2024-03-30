@@ -21,7 +21,7 @@ To start using the <b>configify</b> module in your application import the module
 
 ```js
 @Module({
-  imports: [configifyModule.forRootAsync()],
+  imports: [ConfigifyModule.forRootAsync()],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -35,6 +35,7 @@ my-web-app
 | .env
 | application.yml
 ```
+
 You can also provide the location of the configuration files by overring the configuration options.
 
 ### Mapping Configuration Classes
@@ -42,6 +43,7 @@ You can also provide the location of the configuration files by overring the con
 This module will lookup for every class decorated with `@Configuration` and it will make its instance globally available for the application.
 
 Example of a `.env` file mapped to a class:
+
 ```
 APPLICATION_CLIENT_ID=ABC
 APPLICATION_CLIENT_TOKEN=TEST
@@ -78,19 +80,20 @@ export class DatabaseConfiguration {
   @Value('database.host')
   host: string;
 
-  @Value('database.port', { 
-    parse: (value: any) => parseInt(value) 
+  @Value('database.port', {
+    parse: (value: any) => parseInt(value)
   })
   port: number;
 
-  @Value('database.metadata', { 
-    parse: (value: any) => JSON.parse(value) 
+  @Value('database.metadata', {
+    parse: (value: any) => JSON.parse(value)
   })
   metadata: MetadataType;
 }
 ```
 
 You can map your configuration file to multiple configuration classes:
+
 ```
 # database config
 DATABASE_HOST=localhost
@@ -101,7 +104,6 @@ DATABASE_PASSWORD=test
 OKTA_API_TOKEN=test
 OKTA_CLIENT_ID=test
 ```
-
 
 ```js
 @Configuration()
@@ -145,11 +147,12 @@ APP_CLIENT_ID=${NON_EXISTING_ENV:-DEFAULT_ID} // --> APP_CLIENT_ID=DEFAULT_ID
 
 ### Dealing with Secrets
 
-Out of the box, this module can resolve AWS Secrets Manager and Parameter Store secrets. 
+Out of the box, this module can resolve AWS Secrets Manager and Parameter Store secrets.
 
-Every configuration attribute stating with ```AWS_SECRETS_MANAGER```, ```AWS_PARAMETER_STORE```, `aws-secrets-manager` and ```aws-parameter-store``` will be considered a special configuration attribute and the module will try to resolve it's remote value.
+Every configuration attribute stating with `AWS_SECRETS_MANAGER`, `AWS_PARAMETER_STORE`, `aws-secrets-manager` and `aws-parameter-store` will be considered a special configuration attribute and the module will try to resolve it's remote value.
 
 E.g.: `.env`
+
 ```
 MY_DB_PASSWORD=${AWS_SECRETS_MANAGER_DB_PASSWORD}
 MY_API_TOKEN=${AWS_PARAMETER_STORE_API_TOKEN}
@@ -159,6 +162,7 @@ AWS_PARAMETER_STORE_API_TOKEN=<parameter-name-here>
 ```
 
 `application.yml`
+
 ```yaml
 my-db-password: ${aws-secrets-manager.db.password}
 my-api-token: ${aws-parameter-store.api.token}
@@ -185,7 +189,7 @@ export class SecretConfiguration {
 
 ### Parsing Configuration Values
 
-Parsing a configuration value can be easily done by using a parse callback function available as argument of the ```@Value()``` decorator:
+Parsing a configuration value can be easily done by using a parse callback function available as argument of the `@Value()` decorator:
 
 ```yaml
 db-json-config: |
@@ -194,7 +198,6 @@ db-json-config: |
     "user": "test",
     "password": "test"
   }
-
 ```
 
 ```js
@@ -232,7 +235,8 @@ export class MyConfiguration {
 
 ### Overwrite Default Options
 
-You can overwrite default module otions by providing an object as argumento to the ```forRootAsync()``` method:
+You can overwrite default module otions by providing an object as argumento to the `forRootAsync()` method:
+
 ```js
 /**
 * Ignores any config file.
