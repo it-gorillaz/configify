@@ -1,2 +1,2 @@
-export * from './configfy.module';
+export * from './configify.module';
 export * from './decorators';

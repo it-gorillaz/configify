@@ -16,7 +16,7 @@ import { AwsParameterStoreConfigurationResolver } from './configuration/resolver
 import { Variables } from './interpolation/variables';
 
 /**
- * The configfy module.
+ * The configify module.
  * A NestJS configuration module on steroids.
  *
  * This module provides out of the box configuration files parsing,
@@ -32,7 +32,7 @@ import { Variables } from './interpolation/variables';
  * All the configuration set to the configuration files will be assigned to the process.env object
  */
 @Module({})
-export class ConfigfyModule {
+export class ConfigifyModule {
   /**
    * The default configuration files.
    * If no configuration files are provided this module will
@@ -102,7 +102,7 @@ export class ConfigfyModule {
       exports,
       providers,
       global: true,
-      module: ConfigfyModule,
+      module: ConfigifyModule,
     };
   }
 

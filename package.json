@@ -1,5 +1,5 @@
 {
-  "name": "@itgorillaz/configfy",
+  "name": "@itgorillaz/configify",
   "version": "1.1.0",
   "description": "NestJS Config on Steroids",
   "author": "tommelo",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/it-gorillaz/configfy.git"
+    "url": "git+https://github.com/it-gorillaz/configify.git"
   },
   "keywords": [
     "nestjs",
@@ -16,9 +16,9 @@
     ".env"
   ],
   "bugs": {
-    "url": "https://github.com/it-gorillaz/configfy/issues"
+    "url": "https://github.com/it-gorillaz/configify/issues"
   },
-  "homepage": "https://github.com/it-gorillaz/configfy#readme",
+  "homepage": "https://github.com/it-gorillaz/configify#readme",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
