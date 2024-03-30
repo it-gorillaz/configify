@@ -2,26 +2,26 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-<p align="center"><b>@itgorillaz/configfy</b></p>
+<p align="center"><b>@itgorillaz/configify</b></p>
 <p align="center">NestJS config on steroids</p>
   
 ## Description
 
-**configfy** is a NestJS configuration module that makes it easier to deal with configuration files and secrets.
+**configify** is a NestJS configuration module that makes it easier to deal with configuration files and secrets.
 
 ## Installation
 
 ```bash
-$ npm install --save @itgorillaz/configfy
+$ npm install --save @itgorillaz/configify
 ```
 
 ## Usage
 
-To start using the <b>configfy</b> module in your application import the module by calling the `forRootAsync` function:
+To start using the <b>configify</b> module in your application import the module by calling the `forRootAsync` function:
 
 ```js
 @Module({
-  imports: [ConfigfyModule.forRootAsync()],
+  imports: [configifyModule.forRootAsync()],
   controllers: [AppController],
   providers: [AppService],
 })
