@@ -94,9 +94,10 @@ export class ConfigifyModule {
       Object.assign(configuration, expanded);
     }
 
-    Object.assign(process.env, configuration);
+    const resolvedConfigs = { ...process.env, ...configuration };
 
-    const { exports, providers } = this.buildConfigurationProviders();
+    const { exports, providers } =
+      this.buildConfigurationProviders(resolvedConfigs);
 
     return {
       exports,
@@ -131,9 +132,12 @@ export class ConfigifyModule {
    * It creates the configuration instances, assign its value
    * and perform the object validation.
    *
+   * @param {Record<string, unknown>}
    * @returns {ConfigurationProviders} the module configuration providers
    */
-  private static buildConfigurationProviders(): ConfigurationProviders {
+  private static buildConfigurationProviders(
+    resolvedConfigs: Record<string, unknown>,
+  ): ConfigurationProviders {
     const exports = [];
     const providers: Provider[] = [];
 
@@ -152,8 +156,8 @@ export class ConfigifyModule {
 
         const parse = metadata.options?.parse;
         const value = parse
-          ? parse(process.env[metadata.key])
-          : process.env[metadata.key];
+          ? parse(resolvedConfigs[metadata.key])
+          : resolvedConfigs[metadata.key];
 
         instance[attribute] = value;
       }
