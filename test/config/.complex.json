@@ -4,6 +4,8 @@
   },
   "default-value": "${non.existing.key:-my-default-value}",
   "expanded-secret": "${aws-secrets-manager.secret}",
+  "number-content": 1234,
+  "boolean-content": true,
   "aws-secrets-manager": {
     "secret": "secret-id"
   },

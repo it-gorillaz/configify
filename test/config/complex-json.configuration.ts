@@ -8,6 +8,12 @@ export class ComplexJsonConfiguration {
   @Value('default-value')
   defaultValue: string;
 
+  @Value('number-content', { parse: parseInt })
+  numberContent: number;
+
+  @Value('boolean-content', { parse: (value: any) => !!value })
+  booleanContent: boolean;
+
   @Value('expanded-secret')
   awsSecretsManagerSecret: string;
 

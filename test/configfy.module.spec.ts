@@ -45,6 +45,8 @@ describe('ConfigifyModule', () => {
         awsSecretsManagerTest: secret,
         awsParameterStoreTest: secret,
         expandedEnv: secret,
+        numberContent: 1234,
+        booleanContent: true,
         jsonContent: {
           host: 'localhost',
         },
@@ -74,6 +76,8 @@ describe('ConfigifyModule', () => {
         anyKey: 'any-value',
         awsSecretsManagerSecret: secret,
         awsParameterStoreSecret: secret,
+        numberContent: 1234,
+        booleanContent: true,
         expandedEnv: secret,
         jsonContent: {
           host: 'localhost',
@@ -103,6 +107,8 @@ describe('ConfigifyModule', () => {
       expect(provider.useValue).toEqual({
         anyKey: 'any-value',
         defaultValue: 'my-default-value',
+        numberContent: 1234,
+        booleanContent: true,
         awsSecretsManagerSecret: secret,
         awsParameterStoreSecret: secret,
       });

@@ -1,5 +1,7 @@
 any-key: any-value
 expanded-key: ${aws-secrets-manager.secret}
+number-content: 1234
+boolean-content: yes
 json-content: |
   {
     "host": "localhost"
