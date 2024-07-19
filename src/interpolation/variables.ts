@@ -33,14 +33,18 @@ export class Variables {
   /**
    * Expands the variables of the given object.
    *
-   * @param   {Record<string, any>} record The object
-   * @returns {Record<string, any>}        The expanded object
+   * @param   {Record<string, unknown>} record The object
+   * @returns {Record<string, unknown>}        The expanded object
    */
-  static expand(record: Record<string, any>): Record<string, any> {
+  static expand(record: Record<string, unknown>): Record<string, unknown> {
     const expanded = {};
     for (const key in record) {
       const value = record[key];
-      expanded[key] = this.escapeSequences(this.interpolate(value, record));
+      const interpolated = this.interpolate(value, record);
+      expanded[key] =
+        typeof interpolated === 'string'
+          ? this.escapeSequences(interpolated)
+          : interpolated;
     }
     return expanded;
   }
@@ -53,9 +57,11 @@ export class Variables {
    * @returns
    */
   private static interpolate(
-    value: string,
-    record: Record<string, any>,
-  ): string {
+    value: unknown,
+    record: Record<string, unknown>,
+  ): unknown {
+    if (typeof value !== 'string') return value;
+
     const lastUnescapedDollarSignIndex = this.lastIndexOf(
       value,
       this.UNESCAPED_PATTERN,
@@ -69,7 +75,7 @@ export class Variables {
     if (match != null) {
       const [, group, variableName, defaultValue] = match;
       return this.interpolate(
-        value.replace(group, defaultValue || record[variableName] || ''),
+        value.replace(group, defaultValue || `${record[variableName]}` || ''),
         record,
       );
     }
