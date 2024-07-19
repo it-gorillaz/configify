@@ -18,6 +18,12 @@ export class ComplexYmlConfiguration {
   @Value('expanded-key')
   expandedEnv: string;
 
+  @Value('number-content', { parse: parseInt })
+  numberContent: number;
+
+  @Value('boolean-content', { parse: (value: any) => !!value })
+  booleanContent: boolean;
+
   @Value('json-content', {
     parse: (value: any) => JSON.parse(value),
   })

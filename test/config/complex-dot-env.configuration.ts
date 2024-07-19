@@ -18,6 +18,12 @@ export class ComplexDotEnvConfiguration {
   @Value('EXPANDED_ENV')
   expandedEnv: string;
 
+  @Value('NUMBER_CONTENT', { parse: parseInt })
+  numberContent: number;
+
+  @Value('BOOLEAN_CONTENT', { parse: (value: any) => !!value })
+  booleanContent: boolean;
+
   @Value('JSON_CONTENT', { parse: (value: any) => JSON.parse(value) })
   jsonContent: DotEnvJsonContent;
 }
