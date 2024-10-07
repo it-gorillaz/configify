@@ -39,7 +39,7 @@ export class AwsSecretsManagerConfigurationResolver
     if (errors && errors.length) {
       throw new Error(
         `Unable to resolve secrets:\n${errors
-          .map((e) => `${e.key}: ${e.id} - ${e.error.message}`)
+          .map((e) => `${e.key}: ${e.id} - ${e.error?.message}`)
           .join('\n')}`,
       );
     }

@@ -26,7 +26,7 @@ export class ConfigurationParserFactory {
    * @returns {ConfigurationParser}      the configuration parser
    */
   static getParser(file: string): ConfigurationParser {
-    const ext = this.getFileExt(file);
+    const ext = this.getFileExt(file) as keyof typeof this.parsers;
     return this.parsers[ext];
   }
 
@@ -48,6 +48,6 @@ export class ConfigurationParserFactory {
    * @returns {string}      the file extension
    */
   private static getFileExt(file: string): string {
-    return file.split('.').pop();
+    return file.split('.').pop() || '';
   }
 }
