@@ -231,11 +231,20 @@ export class ConfigifyModule {
    * @returns {string[]}                list of configuration files
    */
   private static resolveConfigurationFiles(path?: string | string[]): string[] {
-    return []
-      .concat(path, this.DEFAULT_CONFIG_FILES)
+    const res: string[] = [];
+    res
+      .concat(
+        path !== undefined
+          ? typeof path == 'string'
+            ? [path]
+            : [...path]
+          : [],
+        this.DEFAULT_CONFIG_FILES,
+      )
       .filter(
         (file) =>
           fs.existsSync(file) && ConfigurationParserFactory.supports(file),
       );
+    return res;
   }
 }
