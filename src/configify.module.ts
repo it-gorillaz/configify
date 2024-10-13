@@ -232,14 +232,7 @@ export class ConfigifyModule {
    */
   private static resolveConfigurationFiles(path?: string | string[]): string[] {
     return ([] as string[])
-      .concat(
-        path !== undefined
-          ? typeof path == 'string'
-            ? [path]
-            : [...path]
-          : [],
-        this.DEFAULT_CONFIG_FILES,
-      )
+      .concat(path || [], this.DEFAULT_CONFIG_FILES)
       .filter(
         (file) =>
           fs.existsSync(file) && ConfigurationParserFactory.supports(file),
