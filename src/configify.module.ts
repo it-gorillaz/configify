@@ -231,8 +231,7 @@ export class ConfigifyModule {
    * @returns {string[]}                list of configuration files
    */
   private static resolveConfigurationFiles(path?: string | string[]): string[] {
-    const res: string[] = [];
-    res
+    return ([] as string[])
       .concat(
         path !== undefined
           ? typeof path == 'string'
@@ -245,6 +244,5 @@ export class ConfigifyModule {
         (file) =>
           fs.existsSync(file) && ConfigurationParserFactory.supports(file),
       );
-    return res;
   }
 }
