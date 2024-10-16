@@ -13,6 +13,6 @@ export class YamlConfigurationParser implements ConfigurationParser {
    * @returns {Record<string, any>}      an object representation of the configuration file
    */
   public parse(file: string): Record<string, any> {
-    return yaml.load(fs.readFileSync(file, 'utf-8'));
+    return yaml.load(fs.readFileSync(file, 'utf-8')) as Record<string, any>;
   }
 }
