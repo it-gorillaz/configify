@@ -11,7 +11,7 @@ import {
  * with Configuration decorator.
  */
 export class ConfigurationRegistry {
-  private static readonly registry: any[] = [];
+  private static readonly registry: Array<unknown> = [];
 
   /**
    * Registers a type.
