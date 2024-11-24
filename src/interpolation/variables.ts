@@ -37,7 +37,7 @@ export class Variables {
    * @returns {Record<string, unknown>}        The expanded object
    */
   static expand(record: Record<string, unknown>): Record<string, unknown> {
-    const expanded = {};
+    const expanded: Record<string, unknown> = {};
     for (const key in record) {
       const value = record[key];
       const interpolated = this.interpolate(value, record);

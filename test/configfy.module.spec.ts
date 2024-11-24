@@ -34,7 +34,7 @@ describe('ConfigifyModule', () => {
         configFilePath: file,
       });
 
-      const provider = module.providers.filter(
+      const provider = module.providers?.filter(
         (p) =>
           (p as ValueProvider).useValue.constructor.name ===
           ComplexDotEnvConfiguration.name,
@@ -66,7 +66,7 @@ describe('ConfigifyModule', () => {
         configFilePath: file,
       });
 
-      const provider = module.providers.filter(
+      const provider = module.providers?.filter(
         (p) =>
           (p as ValueProvider).useValue.constructor.name ===
           ComplexYmlConfiguration.name,
@@ -98,7 +98,7 @@ describe('ConfigifyModule', () => {
         configFilePath: file,
       });
 
-      const provider = module.providers.filter(
+      const provider = module.providers?.filter(
         (p) =>
           (p as ValueProvider).useValue.constructor.name ===
           ComplexJsonConfiguration.name,

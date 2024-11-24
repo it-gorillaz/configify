@@ -12,7 +12,7 @@ export class ConfigurationParserFactory {
   /**
    * The supported file configuration parsers
    */
-  private static readonly parsers = {
+  private static readonly parsers: Record<string, ConfigurationParser> = {
     env: new DotEnvConfigurationParser(),
     yml: new YamlConfigurationParser(),
     yaml: new YamlConfigurationParser(),
@@ -26,7 +26,7 @@ export class ConfigurationParserFactory {
    * @returns {ConfigurationParser}      the configuration parser
    */
   static getParser(file: string): ConfigurationParser {
-    const ext = this.getFileExt(file);
+    const ext = this.getFileExt(file) as keyof typeof this.parsers;
     return this.parsers[ext];
   }
 
@@ -38,7 +38,7 @@ export class ConfigurationParserFactory {
    */
   static supports(file: string): boolean {
     const ext = this.getFileExt(file);
-    return this.parsers.hasOwnProperty(ext);
+    return ext ? this.parsers.hasOwnProperty(ext) : false;
   }
 
   /**
@@ -47,7 +47,7 @@ export class ConfigurationParserFactory {
    * @param   {string} file the file name
    * @returns {string}      the file extension
    */
-  private static getFileExt(file: string): string {
+  private static getFileExt(file: string): string | undefined {
     return file.split('.').pop();
   }
 }
