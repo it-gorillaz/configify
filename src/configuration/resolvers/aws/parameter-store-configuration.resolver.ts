@@ -91,7 +91,7 @@ export class AwsParameterStoreConfigurationResolver
       return {
         id,
         key,
-        error: e,
+        error: e as Error,
         success: false,
       };
     }

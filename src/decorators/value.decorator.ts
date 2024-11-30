@@ -40,7 +40,7 @@ export const Value = (
   key: string,
   options?: ValueOptions,
 ): PropertyDecorator => {
-  return (target: object, property: string) => {
+  return (target: object, property: string | symbol) => {
     ConfigurationRegistry.registerAttribute(target, property);
     Reflect.defineMetadata(VALUE_METADATA, { key, options }, target, property);
   };

@@ -93,7 +93,7 @@ export class AwsSecretsManagerConfigurationResolver
       return {
         id,
         key,
-        error: e,
+        error: e as Error,
         success: false,
       };
     }

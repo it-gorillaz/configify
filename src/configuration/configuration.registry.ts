@@ -28,7 +28,7 @@ export class ConfigurationRegistry {
    * @param {any}    target    the class target
    * @param {string} attribute the attribute name
    */
-  static registerAttribute(target: any, attribute: string): void {
+  static registerAttribute(target: any, attribute: string | symbol): void {
     (
       target[VALUE_PROPERTIES_METADATA] ||
       (target[VALUE_PROPERTIES_METADATA] = [])
