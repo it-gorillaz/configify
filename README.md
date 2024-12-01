@@ -28,6 +28,8 @@ To start using the <b>configify</b> module in your application import the module
 export class AppModule {}
 ```
 
+**Important Note**: When working with strict mode enabled `"strict": true`(tsconfig.json) it's necessary to set the option `strictPropertyInitialization` to `false` since the module will initialize the configuration class properties during runtime after resolving the values of the environment variables.
+
 By default, when bootstraping, the module will lookup for a `.env` or an `application.yml` file at the root folder of the project:
 
 ```
