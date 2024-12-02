@@ -44,7 +44,7 @@ export interface ConfigifyModuleOptions {
 /**
  * The default module options
  */
-export const DefaultConfigfyModuleOptions: ConfigifyModuleOptions = {
+export const DefaultConfigifyModuleOptions: ConfigifyModuleOptions = {
   ignoreConfigFile: false,
   ignoreEnvVars: false,
   expandConfig: true,

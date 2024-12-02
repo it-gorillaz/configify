@@ -10,7 +10,7 @@ import {
   ConfigurationParserFactory,
   ConfigurationProviders,
   ConfigurationRegistry,
-  DefaultConfigfyModuleOptions,
+  DefaultConfigifyModuleOptions,
 } from './configuration';
 import { AwsParameterStoreConfigurationResolver } from './configuration/resolvers/aws/parameter-store-configuration.resolver';
 import { Variables } from './interpolation/variables';
@@ -77,7 +77,7 @@ export class ConfigifyModule {
   static async forRootAsync(
     options: ConfigifyModuleOptions = {},
   ): Promise<DynamicModule> {
-    const settings = { ...options, ...DefaultConfigfyModuleOptions };
+    const settings = { ...options, ...DefaultConfigifyModuleOptions };
     const files = this.resolveConfigurationFiles(settings.configFilePath);
 
     const envVars = settings.ignoreEnvVars ? {} : process.env;
