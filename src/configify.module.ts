@@ -151,9 +151,11 @@ export class ConfigifyModule {
         );
 
         const parse = metadata.options?.parse;
-        const value = parse
-          ? parse(process.env[metadata.key])
-          : process.env[metadata.key];
+
+        const defaultValue =
+          process.env[metadata.key] || metadata.options?.default;
+
+        const value = parse ? parse(defaultValue) : defaultValue;
 
         instance[attribute] = value;
       }
