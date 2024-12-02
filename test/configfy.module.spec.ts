@@ -3,6 +3,7 @@ import {
   secretsManagerSendMock,
   systemsManagerSendMock,
 } from './mock/aws.mock';
+
 import { ValueProvider } from '@nestjs/common';
 import { resolve } from 'path';
 import { ConfigifyModule } from '../src';
@@ -50,6 +51,8 @@ describe('ConfigifyModule', () => {
         jsonContent: {
           host: 'localhost',
         },
+        defaultValue: 'test_default_value',
+        parsedDefaultValue: 1,
       });
     });
 
@@ -82,6 +85,8 @@ describe('ConfigifyModule', () => {
         jsonContent: {
           host: 'localhost',
         },
+        defaultValue: 'test_default_value',
+        parsedDefaultValue: 1,
       });
     });
 
@@ -111,6 +116,8 @@ describe('ConfigifyModule', () => {
         booleanContent: true,
         awsSecretsManagerSecret: secret,
         awsParameterStoreSecret: secret,
+        defaultBoolean: true,
+        parsedDefaultValue: 1,
       });
     });
   });

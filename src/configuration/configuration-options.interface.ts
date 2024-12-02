@@ -4,7 +4,7 @@ import { SSMClient } from '@aws-sdk/client-ssm';
 /**
  * The configuration options interface
  */
-export interface ConfigfyModuleOptions {
+export interface ConfigifyModuleOptions {
   /**
    * Ignores any config file.
    * The default value is false;
@@ -44,7 +44,7 @@ export interface ConfigfyModuleOptions {
 /**
  * The default module options
  */
-export const DefaultConfigfyModuleOptions: ConfigfyModuleOptions = {
+export const DefaultConfigifyModuleOptions: ConfigifyModuleOptions = {
   ignoreConfigFile: false,
   ignoreEnvVars: false,
   expandConfig: true,

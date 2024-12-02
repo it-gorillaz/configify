@@ -6,11 +6,11 @@ import * as fs from 'fs';
 import { resolve } from 'path';
 import {
   AwsSecretsManagerConfigurationResolver,
-  ConfigfyModuleOptions,
+  ConfigifyModuleOptions,
   ConfigurationParserFactory,
   ConfigurationProviders,
   ConfigurationRegistry,
-  DefaultConfigfyModuleOptions,
+  DefaultConfigifyModuleOptions,
 } from './configuration';
 import { AwsParameterStoreConfigurationResolver } from './configuration/resolvers/aws/parameter-store-configuration.resolver';
 import { Variables } from './interpolation/variables';
@@ -51,12 +51,12 @@ export class ConfigifyModule {
    * AWS Secrets Manager and AWS Parameters Store.
    */
   private static readonly SECRETS_RESOLVER_PIPELINE = [
-    (options: ConfigfyModuleOptions) =>
+    (options: ConfigifyModuleOptions) =>
       new AwsSecretsManagerConfigurationResolver(
         options.secretsManagerClient || new SecretsManagerClient(),
       ),
 
-    (options: ConfigfyModuleOptions) =>
+    (options: ConfigifyModuleOptions) =>
       new AwsParameterStoreConfigurationResolver(
         options.ssmClient || new SSMClient(),
       ),
@@ -71,13 +71,13 @@ export class ConfigifyModule {
    *
    * The configuration key pair values will also be available on process.env object.
    *
-   * @param   { ConfigfyModuleOptions } options The module config options
+   * @param   { ConfigifyModuleOptions } options The module config options
    * @returns { DynamicModule }         module  The configy module
    */
   static async forRootAsync(
-    options: ConfigfyModuleOptions = {},
+    options: ConfigifyModuleOptions = {},
   ): Promise<DynamicModule> {
-    const settings = { ...options, ...DefaultConfigfyModuleOptions };
+    const settings = { ...options, ...DefaultConfigifyModuleOptions };
     const files = this.resolveConfigurationFiles(settings.configFilePath);
 
     const envVars = settings.ignoreEnvVars ? {} : process.env;
@@ -110,12 +110,12 @@ export class ConfigifyModule {
    * Runs the secrets resolver pipeline.
    *
    * @param   {Record<string, any>}            config the configuration object
-   * @param   {ConfigfyModuleOptions}          options the module options
+   * @param   {ConfigifyModuleOptions}          options the module options
    * @returns {Promise<Record<string, any>>}   the resolved secrets
    */
   private static async runSecretsResolverPipeline(
     config: Record<string, any>,
-    options: ConfigfyModuleOptions,
+    options: ConfigifyModuleOptions,
   ): Promise<Record<string, any>> {
     const secrets = {};
     for (const buildResolver of this.SECRETS_RESOLVER_PIPELINE) {
@@ -151,9 +151,11 @@ export class ConfigifyModule {
         );
 
         const parse = metadata.options?.parse;
-        const value = parse
-          ? parse(process.env[metadata.key])
-          : process.env[metadata.key];
+
+        const defaultValue =
+          process.env[metadata.key] || metadata.options?.default;
+
+        const value = parse ? parse(defaultValue) : defaultValue;
 
         instance[attribute] = value;
       }

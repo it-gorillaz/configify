@@ -19,4 +19,10 @@ export class ComplexJsonConfiguration {
 
   @Value('aws-parameter-store.secret')
   awsParameterStoreSecret: string;
+
+  @Value('non-existing-key', { default: true })
+  defaultBoolean: boolean;
+
+  @Value('non-existing-key', { parse: parseInt, default: '1' })
+  parsedDefaultValue: number;
 }

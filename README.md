@@ -83,12 +83,12 @@ export class DatabaseConfiguration {
   host: string;
 
   @Value('database.port', {
-    parse: (value: any) => parseInt(value)
+    parse: parseInt
   })
   port: number;
 
   @Value('database.metadata', {
-    parse: (value: any) => JSON.parse(value)
+    parse: JSON.parse
   })
   metadata: MetadataType;
 }
@@ -138,13 +138,31 @@ export class AppService {
 
 ### Variables Expansion
 
-You can make use of variable expasion in your configuration files:
+You can make use of variable expansion in your configuration files:
 
 ```
 MY_API_KEY=${MY_SECRET} // --> MY_API_KEY=TEST
 ANY_OTHER_CONFIG=TEST
 MY_SECRET=TEST
 APP_CLIENT_ID=${NON_EXISTING_ENV:-DEFAULT_ID} // --> APP_CLIENT_ID=DEFAULT_ID
+```
+
+### Defining Default Configuration Values
+
+Other than defining default values with variables expansion, you can also define a default value to an attribute using the `default` option provided by the `@Value()` decorator:
+
+```js
+@Configuration()
+export class DatabaseConfiguration {
+  @Value('DB_HOST', { default: 'localhost' })
+  host: string;
+
+  @Value('DB_PORT', {
+    parse: parseInt,
+    default: 3306
+  })
+  port: number;
+}
 ```
 
 ### Dealing with Secrets
@@ -212,7 +230,7 @@ export interface MyDBConfig {
 @Configuration()
 export class SuperSecretConfiguration {
   @Value('db-json-config', {
-    parse: (value: any) => JSON.parse(value)
+    parse: JSON.parse
   })
   myDbConfig: MyDBConfig;
 }
@@ -237,7 +255,7 @@ export class MyConfiguration {
 
 ### Overwrite Default Options
 
-You can overwrite default module otions by providing an object as argumento to the `forRootAsync()` method:
+You can overwrite default module options by providing an object as argument to the `forRootAsync()` method:
 
 ```js
 /**
