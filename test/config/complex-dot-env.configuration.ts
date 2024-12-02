@@ -26,4 +26,10 @@ export class ComplexDotEnvConfiguration {
 
   @Value('JSON_CONTENT', { parse: (value: any) => JSON.parse(value) })
   jsonContent: DotEnvJsonContent;
+
+  @Value('NON_EXISTING_ENV', { default: 'test_default_value' })
+  defaultValue: string;
+
+  @Value('NON_EXISTING_ENV', { parse: parseInt, default: '1' })
+  parsedDefaultValue: number;
 }

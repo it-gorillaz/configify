@@ -28,4 +28,10 @@ export class ComplexYmlConfiguration {
     parse: (value: any) => JSON.parse(value),
   })
   jsonContent: YmlJsonContent;
+
+  @Value('non-existing-key', { default: 'test_default_value' })
+  defaultValue: string;
+
+  @Value('non-existing-key', { parse: parseInt, default: '1' })
+  parsedDefaultValue: number;
 }
