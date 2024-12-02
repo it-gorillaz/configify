@@ -15,7 +15,17 @@ export const VALUE_PROPERTIES_METADATA = Symbol.for('__properties__');
  * Allows custom parsing to configuration values
  */
 export interface ValueOptions {
-  parse: (value: any) => any;
+  /**
+   * Parses the configuration value.
+   * @param value
+   * @returns parsed value
+   */
+  parse?: (value: any) => unknown;
+
+  /**
+   * Sets a default value if the configuration key is not found.
+   */
+  default?: any;
 }
 
 /**
