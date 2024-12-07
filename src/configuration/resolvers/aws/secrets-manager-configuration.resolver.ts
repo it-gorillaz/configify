@@ -108,7 +108,7 @@ export class AwsSecretsManagerConfigurationResolver
   private buildBulkRequest(
     config: Record<string, any>,
   ): Promise<ResolvedValue>[] {
-    const promises = [];
+    const promises: Promise<ResolvedValue>[] = [];
     for (const [key, value] of Object.entries(config)) {
       promises.push(this.resolveSecretValue(key, value));
     }

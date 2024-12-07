@@ -134,7 +134,7 @@ export class ConfigifyModule {
    * @returns {ConfigurationProviders} the module configuration providers
    */
   private static buildConfigurationProviders(): ConfigurationProviders {
-    const exports = [];
+    const exports: unknown[] = [];
     const providers: Provider[] = [];
 
     const registry = ConfigurationRegistry.getRegistry();
