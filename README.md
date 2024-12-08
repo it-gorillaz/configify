@@ -4,7 +4,11 @@
 
 <p align="center"><b>@itgorillaz/configify</b></p>
 <p align="center">NestJS config on steroids</p>
-  
+
+<p align="center">
+  <a href="https://buymeacoffee.com/tommelo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+</p>
+
 ## Description
 
 **configify** is a NestJS configuration module that makes it easier to deal with configuration files and secrets.
@@ -30,7 +34,7 @@ export class AppModule {}
 
 **Important Note**: When working with strict mode enabled `"strict": true`(tsconfig.json) it's necessary to set the option `strictPropertyInitialization` to `false` since the module will initialize the configuration class properties during runtime after resolving the values of the environment variables.
 
-By default, when bootstraping, the module will lookup for a `.env` or an `application.yml` file at the root folder of the project:
+By default, when bootstraping, the module will lookup for a `.env`, an `application.yml` and an `application.json` file at the root folder of the project:
 
 ```
 my-web-app
