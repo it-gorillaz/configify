@@ -7,6 +7,7 @@ import {
 import { ValueProvider } from '@nestjs/common';
 import { resolve } from 'path';
 import { ConfigifyModule } from '../src';
+import { AwsSecretsResolverFactory } from '../src/configuration';
 import { ComplexDotEnvConfiguration } from './config/complex-dot-env.configuration';
 import { ComplexJsonConfiguration } from './config/complex-json.configuration';
 import { ComplexYmlConfiguration } from './config/complex-yml.configuration';
@@ -33,6 +34,10 @@ describe('ConfigifyModule', () => {
       const file = resolve(process.cwd(), 'test/config/.complex.env');
       const module = await ConfigifyModule.forRootAsync({
         configFilePath: file,
+        secretsResolverStrategies: [
+          AwsSecretsResolverFactory.defaultParameterStoreResolver(),
+          AwsSecretsResolverFactory.defaultSecretsManagerResolver(),
+        ],
       });
 
       const provider = module.providers?.filter(
@@ -67,6 +72,10 @@ describe('ConfigifyModule', () => {
       const file = resolve(process.cwd(), 'test/config/.complex.yml');
       const module = await ConfigifyModule.forRootAsync({
         configFilePath: file,
+        secretsResolverStrategies: [
+          AwsSecretsResolverFactory.defaultParameterStoreResolver(),
+          AwsSecretsResolverFactory.defaultSecretsManagerResolver(),
+        ],
       });
 
       const provider = module.providers?.filter(
@@ -101,6 +110,10 @@ describe('ConfigifyModule', () => {
       const file = resolve(process.cwd(), 'test/config/.complex.json');
       const module = await ConfigifyModule.forRootAsync({
         configFilePath: file,
+        secretsResolverStrategies: [
+          AwsSecretsResolverFactory.defaultParameterStoreResolver(),
+          AwsSecretsResolverFactory.defaultSecretsManagerResolver(),
+        ],
       });
 
       const provider = module.providers?.filter(
