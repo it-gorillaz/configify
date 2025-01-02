@@ -1,5 +1,5 @@
 /**
- * The configuraion parser interface.
+ * The configuration parser interface.
  * This interface is implemented by all
  * the supported configuration parsers.
  */
