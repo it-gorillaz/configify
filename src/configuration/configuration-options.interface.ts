@@ -1,5 +1,4 @@
-import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { SSMClient } from '@aws-sdk/client-ssm';
+import { ConfigurationResolver } from './resolvers';
 
 /**
  * The configuration options interface
@@ -29,16 +28,9 @@ export interface ConfigifyModuleOptions {
   expandConfig?: boolean;
 
   /**
-   * The AWS Secrets Manager Client
-   * If no client is provided, the module will create one.
+   * The secrets resolvers strategies
    */
-  secretsManagerClient?: SecretsManagerClient;
-
-  /**
-   * The AWS Systems Manager Client
-   * If no client is provided, the module will create one.
-   */
-  ssmClient?: SSMClient;
+  secretsResolverStrategies?: ConfigurationResolver[];
 }
 
 /**

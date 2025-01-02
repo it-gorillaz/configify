@@ -1,18 +1,14 @@
-import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { SSMClient } from '@aws-sdk/client-ssm';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { validateSync } from 'class-validator';
 import * as fs from 'fs';
 import { resolve } from 'path';
 import {
-  AwsSecretsManagerConfigurationResolver,
   ConfigifyModuleOptions,
   ConfigurationParserFactory,
   ConfigurationProviders,
   ConfigurationRegistry,
   DefaultConfigifyModuleOptions,
 } from './configuration';
-import { AwsParameterStoreConfigurationResolver } from './configuration/resolvers/aws/parameter-store-configuration.resolver';
 import { Variables } from './interpolation/variables';
 
 /**
@@ -26,7 +22,7 @@ import { Variables } from './interpolation/variables';
  * - Reading configuration files
  * - Resolving remote secrets
  * - Expanding variables
- * - Creating object instances decored with Configuration and assigning its values
+ * - Creating object instances decorated with Configuration and assigning its values
  * - Validating the configuration instance
  *
  * All the configuration set to the configuration files will be assigned to the process.env object
@@ -46,27 +42,10 @@ export class ConfigifyModule {
   ];
 
   /**
-   * The remote secrets resolvers pipeline.
-   * This module currently supports resolving secrets on
-   * AWS Secrets Manager and AWS Parameters Store.
-   */
-  private static readonly SECRETS_RESOLVER_PIPELINE = [
-    (options: ConfigifyModuleOptions) =>
-      new AwsSecretsManagerConfigurationResolver(
-        options.secretsManagerClient || new SecretsManagerClient(),
-      ),
-
-    (options: ConfigifyModuleOptions) =>
-      new AwsParameterStoreConfigurationResolver(
-        options.ssmClient || new SSMClient(),
-      ),
-  ];
-
-  /**
    * Creates the configfy dynamic module.
    *
    * The module will manage the instance of all classes decorated the Configuration decorator,
-   * meaning, the module will instanciate and associate the value to attributes according to the
+   * meaning, the module will create the instance and associate the value to attributes according to the
    * keys provided by the Value decorator.
    *
    * The configuration key pair values will also be available on process.env object.
@@ -118,10 +97,11 @@ export class ConfigifyModule {
     options: ConfigifyModuleOptions,
   ): Promise<Record<string, any>> {
     const secrets = {};
-    for (const buildResolver of this.SECRETS_RESOLVER_PIPELINE) {
-      const resolver = buildResolver(options);
-      const result = await resolver.resolve(config);
-      Object.assign(secrets, result);
+    if (options.secretsResolverStrategies?.length) {
+      for (const resolver of options.secretsResolverStrategies) {
+        const result = await resolver.resolve(config);
+        Object.assign(secrets, result);
+      }
     }
     return secrets;
   }
