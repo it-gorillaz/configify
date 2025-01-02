@@ -40,9 +40,10 @@ By default, when bootstraping, the module will lookup for a `.env`, an `applicat
 my-web-app
 | .env
 | application.yml
+| application.json
 ```
 
-You can also provide the location of the configuration files by overring the configuration options.
+You can also provide the location of the configuration files by overriding the configuration options.
 
 ### Mapping Configuration Classes
 
@@ -171,7 +172,27 @@ export class DatabaseConfiguration {
 
 ### Dealing with Secrets
 
-Out of the box, this module can resolve AWS Secrets Manager and Parameter Store secrets.
+Out of the box, this module can resolve AWS Secrets Manager and Parameter Store secrets. For that, just need to choose which strategies you would like to use to resolve AWS secrets:
+
+```js
+// use default aws client instances
+ConfigifyModule.forRootAsync({
+  secretsResolverStrategies: [
+    AwsSecretsResolverFactory.defaultParameterStoreResolver(),
+    AwsSecretsResolverFactory.defaultSecretsManagerResolver(),
+   ],
+});
+
+// or provide your own aws client instances
+ConfigifyModule.forRootAsync({
+  secretsResolverStrategies: [
+    new AwsParameterStoreConfigurationResolver(new SSMClient())
+    new AwsSecretsManagerConfigurationResolver(
+      new SecretsManagerClient(),
+    ),
+   ],
+});
+```
 
 Every configuration attribute stating with `AWS_SECRETS_MANAGER`, `AWS_PARAMETER_STORE`, `aws-secrets-manager` and `aws-parameter-store` will be considered a special configuration attribute and the module will try to resolve it's remote value.
 
@@ -242,7 +263,7 @@ export class SuperSecretConfiguration {
 
 ### Validating Configuration Classes
 
-Depending on how critical a configuration is, you may want to validate it before bootstraping the application, for that you can use [class-validator](https://github.com/typestack/class-validator) to make sure your configuration is loaded correctly:
+Depending on how critical a configuration is, you may want to validate it before starting the application, for that you can use [class-validator](https://github.com/typestack/class-validator) to make sure your configuration is loaded correctly:
 
 ```js
 @Configuration()
@@ -286,16 +307,9 @@ configFilePath?: string | string[];
 expandConfig?: boolean;
 
 /**
-* The AWS Secrets Manager Client
-* If no client is provided, the module will create one.
-*/
-secretsManagerClient?: SecretsManagerClient;
-
-/**
-* The AWS Systems Manager Client
-* If no client is provided, the module will create one.
-*/
-ssmClient?: SSMClient;
+ * The secrets resolvers strategies
+ */
+secretsResolverStrategies?: ConfigurationResolver[];
 ```
 
 ## License
