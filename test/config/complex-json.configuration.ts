@@ -14,12 +14,6 @@ export class ComplexJsonConfiguration {
   @Value('boolean-content', { parse: (value: any) => !!value })
   booleanContent: boolean;
 
-  @Value('expanded-secret')
-  awsSecretsManagerSecret: string;
-
-  @Value('aws-parameter-store.secret')
-  awsParameterStoreSecret: string;
-
   @Value('non-existing-key', { default: true })
   defaultBoolean: boolean;
 

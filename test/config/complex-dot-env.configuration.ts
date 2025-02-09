@@ -9,12 +9,6 @@ export class ComplexDotEnvConfiguration {
   @Value('ANY_KEY')
   anyKey: string;
 
-  @Value('AWS_SECRETS_MANAGER_TEST')
-  awsSecretsManagerTest: string;
-
-  @Value('AWS_PARAMETER_STORE_TEST')
-  awsParameterStoreTest: string;
-
   @Value('EXPANDED_ENV')
   expandedEnv: string;
 

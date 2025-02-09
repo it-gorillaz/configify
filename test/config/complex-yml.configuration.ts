@@ -9,12 +9,6 @@ export class ComplexYmlConfiguration {
   @Value('any-key')
   anyKey: string;
 
-  @Value('aws-secrets-manager.secret')
-  awsSecretsManagerSecret: string;
-
-  @Value('aws-parameter-store.secret')
-  awsParameterStoreSecret: string;
-
   @Value('expanded-key')
   expandedEnv: string;
 
