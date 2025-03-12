@@ -18,6 +18,6 @@ jobs:
       - name: Copy files for distribution
         run: cp package.json README.md LICENSE dist
       - name: Publish package on NPM
-        run: npm publish --access public
+        run: npm publish ./dist --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
