@@ -172,9 +172,20 @@ export class DatabaseConfiguration {
 
 ### Dealing with Secrets
 
-Out of the box, this module can resolve AWS Secrets Manager and Parameter Store secrets. For that, just need to choose which strategies you would like to use to resolve AWS secrets:
+Out of the box, this module can resolve AWS Secrets Manager and Parameter Store secrets.
+
+For that, first is you need to install the required aws-sdk modules:
+
+```
+npm install @aws-sdk/client-ssm @aws-sdk/client-secrets-manager
+```
+
+then you can choose which strategies you would like to use to resolve AWS secrets:
 
 ```js
+import { ConfigifyModule } from '@itgorillaz/configify';
+import { AwsSecretsResolverFactory } from '@itgorillaz/configify/configuration/resolvers/aws';
+
 // use default aws client instances
 ConfigifyModule.forRootAsync({
   secretsResolverStrategies: [
