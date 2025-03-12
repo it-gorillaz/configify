@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { secretsManagerSendMock } from '../mock/aws.mock';
+
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
-import { AwsSecretsManagerConfigurationResolver } from '../../src/configuration';
+import { AwsSecretsManagerConfigurationResolver } from '../../src/configuration/resolvers/aws';
 
 describe('AwsSecretsManagerConfigurationResolver', () => {
   beforeEach(() => {

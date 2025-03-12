@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { systemsManagerSendMock } from '../mock/aws.mock';
+
 import { SSMClient } from '@aws-sdk/client-ssm';
-import { AwsParameterStoreConfigurationResolver } from '../../src/configuration';
+import { AwsParameterStoreConfigurationResolver } from '../../src/configuration/resolvers/aws';
 
 describe('AwsParameterStoreConfigurationResolver', () => {
   beforeEach(() => {
@@ -14,7 +15,9 @@ describe('AwsParameterStoreConfigurationResolver', () => {
 
   describe('resolve()', () => {
     it('should throw error when unable to resolve parameter', async () => {
-      systemsManagerSendMock.mockRejectedValue(new Error('Parameter not found'));
+      systemsManagerSendMock.mockRejectedValue(
+        new Error('Parameter not found'),
+      );
 
       const resolver = new AwsParameterStoreConfigurationResolver(
         new SSMClient(),
@@ -29,7 +32,9 @@ describe('AwsParameterStoreConfigurationResolver', () => {
 
     it('should resolve parameter', async () => {
       const secret = 'test';
-      systemsManagerSendMock.mockResolvedValue({ Parameter: { Value: secret } });
+      systemsManagerSendMock.mockResolvedValue({
+        Parameter: { Value: secret },
+      });
 
       const resolver = new AwsParameterStoreConfigurationResolver(
         new SSMClient(),
@@ -40,8 +45,8 @@ describe('AwsParameterStoreConfigurationResolver', () => {
         'aws-parameter-store.secret': 'any/secret/id',
       });
 
-      expect(config).toEqual({ 
-        AWS_PARAMETER_STORE_CREDENTIALS: secret, 
+      expect(config).toEqual({
+        AWS_PARAMETER_STORE_CREDENTIALS: secret,
         'aws-parameter-store.secret': secret,
       });
     });
