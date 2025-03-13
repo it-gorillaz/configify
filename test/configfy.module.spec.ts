@@ -50,6 +50,7 @@ describe('ConfigifyModule', () => {
         anyKey: 'ANY_VALUE',
         awsSecretsManagerTest: secret,
         awsParameterStoreTest: secret,
+        bitwardenSecretsManagerTest: 'test-secret-id',
         expandedEnv: secret,
         numberContent: 1234,
         booleanContent: true,
@@ -88,6 +89,7 @@ describe('ConfigifyModule', () => {
         anyKey: 'any-value',
         awsSecretsManagerSecret: secret,
         awsParameterStoreSecret: secret,
+        bitwardenSecretsManagerSecret: 'test-secret-id',
         numberContent: 1234,
         booleanContent: true,
         expandedEnv: secret,
@@ -129,6 +131,7 @@ describe('ConfigifyModule', () => {
         booleanContent: true,
         awsSecretsManagerSecret: secret,
         awsParameterStoreSecret: secret,
+        bitwardenSecretsManagerSecret: 'test-secret-id',
         defaultBoolean: true,
         parsedDefaultValue: 1,
       });
