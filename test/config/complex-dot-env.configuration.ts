@@ -15,6 +15,9 @@ export class ComplexDotEnvConfiguration {
   @Value('AWS_PARAMETER_STORE_TEST')
   awsParameterStoreTest: string;
 
+  @Value('BITWARDEN_SECRETS_MANAGER_TEST')
+  bitwardenSecretsManagerTest: string;
+
   @Value('EXPANDED_ENV')
   expandedEnv: string;
 

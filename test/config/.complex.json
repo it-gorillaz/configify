@@ -11,5 +11,8 @@
   },
   "aws-parameter-store": {
     "secret": "parameter-name"
+  },
+  "bitwarden-secrets-manager": {
+    "secret": "test-secret-id"
   }
 }
