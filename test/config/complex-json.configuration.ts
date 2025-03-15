@@ -20,6 +20,9 @@ export class ComplexJsonConfiguration {
   @Value('aws-parameter-store.secret')
   awsParameterStoreSecret: string;
 
+  @Value('bitwarden-secrets-manager.secret')
+  bitwardenSecretsManagerSecret: string;
+
   @Value('non-existing-key', { default: true })
   defaultBoolean: boolean;
 

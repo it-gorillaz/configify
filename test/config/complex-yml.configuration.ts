@@ -15,6 +15,9 @@ export class ComplexYmlConfiguration {
   @Value('aws-parameter-store.secret')
   awsParameterStoreSecret: string;
 
+  @Value('bitwarden-secrets-manager.secret')
+  bitwardenSecretsManagerSecret: string;
+
   @Value('expanded-key')
   expandedEnv: string;
 
