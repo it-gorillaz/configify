@@ -18,6 +18,9 @@ export class ComplexDotEnvConfiguration {
   @Value('BITWARDEN_SECRETS_MANAGER_TEST')
   bitwardenSecretsManagerTest: string;
 
+  @Value('GCP_SECRET_MANAGER_TEST')
+  gcpSecretManagerTest: string;
+
   @Value('EXPANDED_ENV')
   expandedEnv: string;
 

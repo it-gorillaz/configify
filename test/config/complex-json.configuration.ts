@@ -23,6 +23,9 @@ export class ComplexJsonConfiguration {
   @Value('bitwarden-secrets-manager.secret')
   bitwardenSecretsManagerSecret: string;
 
+  @Value('gcp-secret-manager.secret')
+  gcpSecretManagerSecret: string;
+
   @Value('non-existing-key', { default: true })
   defaultBoolean: boolean;
 
