@@ -14,5 +14,8 @@
   },
   "bitwarden-secrets-manager": {
     "secret": "test-secret-id"
+  },
+  "gcp-secret-manager": {
+    "secret": "test-gcp-secret"
   }
 }

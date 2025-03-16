@@ -51,6 +51,7 @@ describe('ConfigifyModule', () => {
         awsSecretsManagerTest: secret,
         awsParameterStoreTest: secret,
         bitwardenSecretsManagerTest: 'test-secret-id',
+        gcpSecretManagerTest: 'test-gcp-secret',
         expandedEnv: secret,
         numberContent: 1234,
         booleanContent: true,
@@ -90,6 +91,7 @@ describe('ConfigifyModule', () => {
         awsSecretsManagerSecret: secret,
         awsParameterStoreSecret: secret,
         bitwardenSecretsManagerSecret: 'test-secret-id',
+        gcpSecretManagerSecret: 'test-gcp-secret',
         numberContent: 1234,
         booleanContent: true,
         expandedEnv: secret,
@@ -132,6 +134,7 @@ describe('ConfigifyModule', () => {
         awsSecretsManagerSecret: secret,
         awsParameterStoreSecret: secret,
         bitwardenSecretsManagerSecret: 'test-secret-id',
+        gcpSecretManagerSecret: 'test-gcp-secret',
         defaultBoolean: true,
         parsedDefaultValue: 1,
       });

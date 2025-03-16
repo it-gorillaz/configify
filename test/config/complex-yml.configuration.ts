@@ -18,6 +18,9 @@ export class ComplexYmlConfiguration {
   @Value('bitwarden-secrets-manager.secret')
   bitwardenSecretsManagerSecret: string;
 
+  @Value('gcp-secret-manager.secret')
+  gcpSecretManagerSecret: string;
+
   @Value('expanded-key')
   expandedEnv: string;
 
