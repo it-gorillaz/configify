@@ -2,6 +2,9 @@ import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 import { ConfigurationResolver } from '../configuration-resolver.interface';
 import { ResolvedValue } from '../resolved-value.interface';
 
+/**
+ * Google Cloud Secret Manager Configuration Resolver.
+ */
 export class GoogleCloudSecretManagerConfigurationResolver
   implements ConfigurationResolver
 {
@@ -9,14 +12,19 @@ export class GoogleCloudSecretManagerConfigurationResolver
   private readonly GCP_SECRET_MANAGER_ENV_PREFIX = 'GCP_SECRET_MANAGER';
 
   /**
+   * Creates a new instance of the gcp secret manager resolver
    *
-   * @param client
+   * @param {SecretManagerServiceClient} client the sdk client
    */
   constructor(private readonly client: SecretManagerServiceClient) {}
 
   /**
+   * Fetches the secrets and assign it to an object representation
+   * of the configuration.
    *
-   * @param configuration
+   * @param   {Record<string, any>} config the configuration object
+   * @returns {Record<string, any>}        the configuration with secret values assigned
+   * @throws  {Error}                      if unable to fetch the secret
    */
   async resolve(config: Record<string, any>): Promise<Record<string, any>> {
     const parameters = this.filterConfiguration(config);
