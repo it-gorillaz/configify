@@ -21,6 +21,9 @@ export class ComplexDotEnvConfiguration {
   @Value('GCP_SECRET_MANAGER_TEST')
   gcpSecretManagerTest: string;
 
+  @Value('AZURE_KEY_VAULT_TEST')
+  azureKeyVaultTest: string;
+
   @Value('EXPANDED_ENV')
   expandedEnv: string;
 
