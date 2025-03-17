@@ -1,6 +1,7 @@
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
 import { SSMClient } from '@aws-sdk/client-ssm';
 import { ConfigurationResolver } from '../configuration-resolver.interface';
+import { RemoteConfigurationResolver } from '../remote-configuration.resolver';
 import { AwsParameterStoreConfigurationResolver } from './parameter-store-configuration.resolver';
 import { AwsSecretsManagerConfigurationResolver } from './secrets-manager-configuration.resolver';
 
@@ -17,7 +18,10 @@ export class AwsSecretsResolverFactory {
    * @returns {ConfigurationResolver} the default parameter store secrets resolver
    */
   static defaultParameterStoreResolver(): ConfigurationResolver {
-    return new AwsParameterStoreConfigurationResolver(new SSMClient());
+    const strategy = new AwsParameterStoreConfigurationResolver(
+      new SSMClient(),
+    );
+    return new RemoteConfigurationResolver(strategy);
   }
 
   /**
@@ -25,8 +29,9 @@ export class AwsSecretsResolverFactory {
    * @returns {ConfigurationResolver} the default secrets manager secrets resolver
    */
   static defaultSecretsManagerResolver(): ConfigurationResolver {
-    return new AwsSecretsManagerConfigurationResolver(
+    const strategy = new AwsSecretsManagerConfigurationResolver(
       new SecretsManagerClient(),
     );
+    return new RemoteConfigurationResolver(strategy);
   }
 }
