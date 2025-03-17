@@ -21,6 +21,9 @@ export class ComplexYmlConfiguration {
   @Value('gcp-secret-manager.secret')
   gcpSecretManagerSecret: string;
 
+  @Value('azure-key-vault.secret')
+  azureKeyVaultSecret: string;
+
   @Value('expanded-key')
   expandedEnv: string;
 

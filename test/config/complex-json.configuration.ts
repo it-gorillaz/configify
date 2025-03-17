@@ -26,6 +26,9 @@ export class ComplexJsonConfiguration {
   @Value('gcp-secret-manager.secret')
   gcpSecretManagerSecret: string;
 
+  @Value('azure-key-vault.secret')
+  azureKeyVaultSecret: string;
+
   @Value('non-existing-key', { default: true })
   defaultBoolean: boolean;
 

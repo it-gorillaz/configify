@@ -17,5 +17,8 @@
   },
   "gcp-secret-manager": {
     "secret": "test-gcp-secret"
+  },
+  "azure-key-vault": {
+    "secret": "test-azure-secret"
   }
 }
