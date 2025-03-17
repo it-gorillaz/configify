@@ -6,6 +6,7 @@ import {
 } from '../mock/bitwarden.mock';
 
 import { BitwardenClient } from '@bitwarden/sdk-napi';
+import { RemoteConfigurationResolver } from '../../src';
 import {
   BitwardenSecretsManagerConfigurationResolver,
   BitwardenSecretsResolverFactory,
@@ -31,9 +32,11 @@ describe('BitwardenSecretsManagerConfigurationResolver', () => {
         new Error('Unable to Authenticate'),
       );
 
-      const resolver = new BitwardenSecretsManagerConfigurationResolver(
-        bitwardenClientMock,
-        testAccessToken,
+      const resolver = new RemoteConfigurationResolver(
+        new BitwardenSecretsManagerConfigurationResolver(
+          bitwardenClientMock,
+          testAccessToken,
+        ),
       );
 
       await expect(
@@ -55,9 +58,11 @@ describe('BitwardenSecretsManagerConfigurationResolver', () => {
         new Error('Secret ID not found'),
       );
 
-      const resolver = new BitwardenSecretsManagerConfigurationResolver(
-        bitwardenClientMock,
-        testAccessToken,
+      const resolver = new RemoteConfigurationResolver(
+        new BitwardenSecretsManagerConfigurationResolver(
+          bitwardenClientMock,
+          testAccessToken,
+        ),
       );
 
       await expect(
@@ -80,9 +85,11 @@ describe('BitwardenSecretsManagerConfigurationResolver', () => {
         value: 'test-secret',
       });
 
-      const resolver = new BitwardenSecretsManagerConfigurationResolver(
-        bitwardenClientMock,
-        testAccessToken,
+      const resolver = new RemoteConfigurationResolver(
+        new BitwardenSecretsManagerConfigurationResolver(
+          bitwardenClientMock,
+          testAccessToken,
+        ),
       );
 
       const result = await resolver.resolve({
@@ -108,9 +115,7 @@ describe('BitwardenSecretsManagerConfigurationResolver', () => {
           'test-access-token',
         );
 
-      expect(resolver).toBeInstanceOf(
-        BitwardenSecretsManagerConfigurationResolver,
-      );
+      expect(resolver).toBeInstanceOf(RemoteConfigurationResolver);
 
       expect(BitwardenClient).toHaveBeenCalledWith({
         apiUrl: 'https://api.bitwarden.eu',
@@ -127,9 +132,7 @@ describe('BitwardenSecretsManagerConfigurationResolver', () => {
           'test-access-token',
         );
 
-      expect(resolver).toBeInstanceOf(
-        BitwardenSecretsManagerConfigurationResolver,
-      );
+      expect(resolver).toBeInstanceOf(RemoteConfigurationResolver);
 
       expect(BitwardenClient).toHaveBeenCalledWith({
         apiUrl: 'https://api.bitwarden.com',

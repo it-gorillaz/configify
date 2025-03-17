@@ -2,6 +2,7 @@
 import { systemsManagerSendMock } from '../mock/aws.mock';
 
 import { SSMClient } from '@aws-sdk/client-ssm';
+import { RemoteConfigurationResolver } from '../../src';
 import { AwsParameterStoreConfigurationResolver } from '../../src/configuration/resolvers/aws';
 
 describe('AwsParameterStoreConfigurationResolver', () => {
@@ -19,8 +20,8 @@ describe('AwsParameterStoreConfigurationResolver', () => {
         new Error('Parameter not found'),
       );
 
-      const resolver = new AwsParameterStoreConfigurationResolver(
-        new SSMClient(),
+      const resolver = new RemoteConfigurationResolver(
+        new AwsParameterStoreConfigurationResolver(new SSMClient()),
       );
 
       await expect(
@@ -36,8 +37,8 @@ describe('AwsParameterStoreConfigurationResolver', () => {
         Parameter: { Value: secret },
       });
 
-      const resolver = new AwsParameterStoreConfigurationResolver(
-        new SSMClient(),
+      const resolver = new RemoteConfigurationResolver(
+        new AwsParameterStoreConfigurationResolver(new SSMClient()),
       );
 
       const config = await resolver.resolve({

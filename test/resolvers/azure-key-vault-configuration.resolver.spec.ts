@@ -2,6 +2,7 @@
 import { getSecretMock, secretClientMock } from '../mock/azure.mock';
 
 import { SecretClient } from '@azure/keyvault-secrets';
+import { RemoteConfigurationResolver } from '../../src';
 import {
   AzureKeyVaultConfigurationResolver,
   AzureKeyVaultConfigurationResolverFactory,
@@ -25,7 +26,9 @@ describe('AzureKeyVaultConfigurationResolver', () => {
 
       getSecretMock.mockRejectedValue(new Error('Unable to fetch the secret'));
 
-      const resolver = new AzureKeyVaultConfigurationResolver(secretClientMock);
+      const resolver = new RemoteConfigurationResolver(
+        new AzureKeyVaultConfigurationResolver(secretClientMock),
+      );
 
       await expect(resolver.resolve(config)).rejects.toThrow(Error);
 
@@ -41,7 +44,9 @@ describe('AzureKeyVaultConfigurationResolver', () => {
 
       getSecretMock.mockResolvedValue({ value: 'mySecretDBPassword' });
 
-      const resolver = new AzureKeyVaultConfigurationResolver(secretClientMock);
+      const resolver = new RemoteConfigurationResolver(
+        new AzureKeyVaultConfigurationResolver(secretClientMock),
+      );
 
       const result = await resolver.resolve(config);
 
@@ -59,7 +64,7 @@ describe('AzureKeyVaultConfigurationResolver', () => {
           'test-url',
         );
 
-      expect(resolver).toBeInstanceOf(AzureKeyVaultConfigurationResolver);
+      expect(resolver).toBeInstanceOf(RemoteConfigurationResolver);
       expect(SecretClient).toHaveBeenCalledTimes(1);
     });
   });
