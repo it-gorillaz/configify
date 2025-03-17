@@ -5,14 +5,13 @@ import {
 } from '../mock/gcp.mock';
 
 import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
+import { RemoteConfigurationResolver } from '../../src';
 import {
   GoogleCloudSecretManagerConfigurationResolver,
   GoogleCloudSecretsResolverFactory,
 } from '../../src/configuration/resolvers/gcp';
 
 describe('GoogleCloudSecretManagerConfigurationResolver', () => {
-  const testAccessToken = '';
-
   beforeEach(() => {
     accessSecretVersionMock.mockReset();
     jest.clearAllMocks();
@@ -33,8 +32,10 @@ describe('GoogleCloudSecretManagerConfigurationResolver', () => {
         new Error('Unable to fetch the secret'),
       );
 
-      const resolver = new GoogleCloudSecretManagerConfigurationResolver(
-        secretManagerServiceClientMock,
+      const resolver = new RemoteConfigurationResolver(
+        new GoogleCloudSecretManagerConfigurationResolver(
+          secretManagerServiceClientMock,
+        ),
       );
 
       await expect(resolver.resolve(config)).rejects.toThrow(Error);
@@ -55,8 +56,10 @@ describe('GoogleCloudSecretManagerConfigurationResolver', () => {
         { payload: { data: Buffer.from('test-secret') } },
       ]);
 
-      const resolver = new GoogleCloudSecretManagerConfigurationResolver(
-        secretManagerServiceClientMock,
+      const resolver = new RemoteConfigurationResolver(
+        new GoogleCloudSecretManagerConfigurationResolver(
+          secretManagerServiceClientMock,
+        ),
       );
 
       const result = await resolver.resolve(config);
@@ -75,10 +78,7 @@ describe('GoogleCloudSecretManagerConfigurationResolver', () => {
       const resolver =
         GoogleCloudSecretsResolverFactory.defaultSecretManagerConfigurationResolver();
 
-      expect(resolver).toBeInstanceOf(
-        GoogleCloudSecretManagerConfigurationResolver,
-      );
-
+      expect(resolver).toBeInstanceOf(RemoteConfigurationResolver);
       expect(SecretManagerServiceClient).toHaveBeenCalledTimes(1);
     });
   });

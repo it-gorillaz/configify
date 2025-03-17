@@ -2,6 +2,7 @@
 import { secretsManagerSendMock } from '../mock/aws.mock';
 
 import { SecretsManagerClient } from '@aws-sdk/client-secrets-manager';
+import { RemoteConfigurationResolver } from '../../src';
 import { AwsSecretsManagerConfigurationResolver } from '../../src/configuration/resolvers/aws';
 
 describe('AwsSecretsManagerConfigurationResolver', () => {
@@ -17,8 +18,8 @@ describe('AwsSecretsManagerConfigurationResolver', () => {
     it('should throw error when unable to resolve secret', async () => {
       secretsManagerSendMock.mockRejectedValue(new Error('Secret not found'));
 
-      const resolver = new AwsSecretsManagerConfigurationResolver(
-        new SecretsManagerClient(),
+      const resolver = new RemoteConfigurationResolver(
+        new AwsSecretsManagerConfigurationResolver(new SecretsManagerClient()),
       );
 
       await expect(
@@ -32,8 +33,8 @@ describe('AwsSecretsManagerConfigurationResolver', () => {
       const secret = 'test';
       secretsManagerSendMock.mockResolvedValue({ SecretString: secret });
 
-      const resolver = new AwsSecretsManagerConfigurationResolver(
-        new SecretsManagerClient(),
+      const resolver = new RemoteConfigurationResolver(
+        new AwsSecretsManagerConfigurationResolver(new SecretsManagerClient()),
       );
 
       const config = await resolver.resolve({

@@ -3,6 +3,8 @@ import {
   ClientSettings,
   DeviceType,
 } from '@bitwarden/sdk-napi';
+import { ConfigurationResolver } from '../configuration-resolver.interface';
+import { RemoteConfigurationResolver } from '../remote-configuration.resolver';
 import { BitwardenSecretsManagerConfigurationResolver } from './bitwarden-secrets-manager.resolver';
 import { BitwardenServerRegion } from './bitwarden-server.region';
 
@@ -42,7 +44,7 @@ export class BitwardenSecretsResolverFactory {
   static defaultBitwardenSecretsResolver(
     region: BitwardenServerRegion,
     accessToken?: string,
-  ): BitwardenSecretsManagerConfigurationResolver {
+  ): ConfigurationResolver {
     const token = accessToken || process.env.BWS_ACCESS_TOKEN;
 
     if (!token) {
@@ -55,7 +57,11 @@ export class BitwardenSecretsResolverFactory {
         : this.BITWARDEN_US_SETTINGS;
 
     const client = new BitwardenClient(settings);
+    const strategy = new BitwardenSecretsManagerConfigurationResolver(
+      client,
+      token,
+    );
 
-    return new BitwardenSecretsManagerConfigurationResolver(client, token);
+    return new RemoteConfigurationResolver(strategy);
   }
 }
