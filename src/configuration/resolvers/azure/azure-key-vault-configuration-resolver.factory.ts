@@ -17,7 +17,7 @@ export class AzureKeyVaultConfigurationResolverFactory {
   static defaultKeyVaultConfigurationResolver(
     keyVaultUrl?: string,
   ): AzureKeyVaultConfigurationResolver {
-    const url = keyVaultUrl || process.env.AZURE_KEYVAULT_URL;
+    const url = keyVaultUrl || process.env.AZURE_KEY_VAULT_URL;
 
     if (!url) {
       throw new Error('Azure KeyVault URL is required');
