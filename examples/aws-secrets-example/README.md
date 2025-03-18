@@ -40,7 +40,7 @@ When initializing the `ConfigifyModule`, you can choose which strategy will be u
 export class AppModule {}
 ```
 
-Alternatively, you can initialize the module passing your own instance of the aws sdk:
+Alternatively, you can initialize the module with your own instance of the aws sdk:
 
 ```js
 import { SSMClient } from '@aws-sdk/client-ssm';
