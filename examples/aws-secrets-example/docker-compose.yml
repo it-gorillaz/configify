@@ -1,0 +1,59 @@
+version: "3"
+networks:
+  default:
+    driver: bridge
+services:
+  localstack-configify:
+    container_name: localstack-configify
+    image: localstack/localstack
+    networks:
+      - default
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      AWS_DEFAULT_REGION: eu-central-1
+      AWS_REGION: eu-central-1
+      AWS_ACCESS_KEY_ID: localstack
+      AWS_SECRET_ACCESS_KEY: localstack
+      DEBUG: ${DEBUG-}
+      DOCKER_HOST: unix:///var/run/docker.sock
+      SERVICES: sts,iam,ssm,secretsmanager,events
+    volumes:
+      - ./localstack:/etc/localstack/init/ready.d
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "awslocal",
+          "ssm",
+          "get-parameter",
+          "--name",
+          "/secret/db/password"
+        ]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+
+  aws-secrets-example:
+    container_name: aws-secrets-example
+    depends_on:
+      localstack-configify:
+        condition: service_healthy
+    build: ./
+    networks:
+      - default
+    environment:
+      AWS_REGION: eu-central-1
+      AWS_DEFAULT_REGION: eu-central-1
+      AWS_ACCESS_KEY_ID: localstack
+      AWS_SECRET_ACCESS_KEY: localstack
+      AWS_ENDPOINT_URL: http://localstack-configify:4566
+      AWS_SECRETS_MANAGER_DB_PASSWORD: my-db-secret
+      AWS_PARAMETER_STORE_DB_PASSWORD: /secret/db/password
+    ports:
+      - "3000:3000"
