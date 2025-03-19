@@ -14,28 +14,17 @@ services:
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
     volumes:
       - ./mockserver.json:/config/initializer.json
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "curl",
-          "http://localhost:1080/secrets/my-custom-secret-id"
-        ]
-      interval: 10s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
 
   custom-secrets-example:
     container_name: custom-secrets-example
+    restart: always
     depends_on:
-      mockserver-configify:
-        condition: service_healthy
+      - mockserver-configify
     build: ./
     networks:
       - default
     environment:
-      CUSTOM_SECRET_URL: http://mockserver-configify:1080/secrets
+      MOCK_SERVER_URL: http://mockserver-configify:1080/secrets
       CUSTOM_SECRET_DB_PASSWORD: my-custom-secret-id
     ports:
       - "3000:3000"
