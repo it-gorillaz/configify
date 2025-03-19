@@ -172,76 +172,15 @@ export class DatabaseConfiguration {
 
 ### Dealing with Secrets
 
-Out of the box, this module can resolve AWS Secrets Manager and Parameter Store secrets.
+Out of the box, this module can resolve secrets from:
 
-For that, first is you need to install the required aws-sdk modules:
+- AWS Secrets Manager and AWS Parameter Store
+- Azure Key Vault
+- Bitwarden Secrets Manager
+- Google Cloud Secret Manager
+- Custom Remote Configuration Resolver(your own implementation)
 
-```
-npm install @aws-sdk/client-ssm @aws-sdk/client-secrets-manager
-```
-
-then you can choose which strategies you would like to use to resolve AWS secrets:
-
-```js
-import { ConfigifyModule } from '@itgorillaz/configify';
-import { AwsSecretsResolverFactory } from '@itgorillaz/configify/configuration/resolvers/aws';
-
-// use default aws client instances
-ConfigifyModule.forRootAsync({
-  secretsResolverStrategies: [
-    AwsSecretsResolverFactory.defaultParameterStoreResolver(),
-    AwsSecretsResolverFactory.defaultSecretsManagerResolver(),
-   ],
-});
-
-// or provide your own aws client instances
-ConfigifyModule.forRootAsync({
-  secretsResolverStrategies: [
-    new AwsParameterStoreConfigurationResolver(new SSMClient())
-    new AwsSecretsManagerConfigurationResolver(
-      new SecretsManagerClient(),
-    ),
-   ],
-});
-```
-
-Every configuration attribute stating with `AWS_SECRETS_MANAGER`, `AWS_PARAMETER_STORE`, `aws-secrets-manager` and `aws-parameter-store` will be considered a special configuration attribute and the module will try to resolve it's remote value.
-
-E.g.: `.env`
-
-```
-MY_DB_PASSWORD=${AWS_SECRETS_MANAGER_DB_PASSWORD}
-MY_API_TOKEN=${AWS_PARAMETER_STORE_API_TOKEN}
-
-AWS_SECRETS_MANAGER_DB_PASSWORD=<secret-id-here>
-AWS_PARAMETER_STORE_API_TOKEN=<parameter-name-here>
-```
-
-`application.yml`
-
-```yaml
-my-db-password: ${aws-secrets-manager.db.password}
-my-api-token: ${aws-parameter-store.api.token}
-
-aws-secrets-manager:
-  db:
-    password: <secret-id-here>
-
-aws-parameter-store:
-  api:
-    token: <parameter-name-here>
-```
-
-```js
-@Configuration()
-export class SecretConfiguration {
-  @Value('my-db-password') // or @Value('aws-secrets-manager.db.password')
-  myDbPassword: string;
-
-  @Value('my-api-token') // or @Value('aws-parameter-store.api.token')
-  myApiToken: string;
-}
-```
+Check the [examples](/examples/) and their documentation to learn how to use them.
 
 ### Parsing Configuration Values
 
