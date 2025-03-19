@@ -1,0 +1,14 @@
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/secrets/my-custom-secret-id"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "body": {
+        "value": "mySuperCustomSecret"
+      }
+    }
+  }
+]
