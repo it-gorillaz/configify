@@ -10,7 +10,7 @@ import { AzureKeyVaultConfigurationResolver } from './azure-key-vault-configurat
 export class AzureKeyVaultConfigurationResolverFactory {
   /**
    * Creates a default azure keyvault secrets resolver
-   * using the provided keyvault url or the AZURE_KEY_VAULT_URL
+   * using the provided keyvault url or the AZURE_KEYVAULT_URL
    * environment variable.
    *
    * @param keyVaultUrl
@@ -19,7 +19,7 @@ export class AzureKeyVaultConfigurationResolverFactory {
   static defaultKeyVaultConfigurationResolver(
     keyVaultUrl?: string,
   ): ConfigurationResolver {
-    const url = keyVaultUrl || process.env.AZURE_KEY_VAULT_URL;
+    const url = keyVaultUrl || process.env.AZURE_KEYVAULT_URL;
 
     if (!url) {
       throw new Error('Azure KeyVault URL is required');
