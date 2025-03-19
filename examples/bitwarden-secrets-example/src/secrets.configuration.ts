@@ -2,6 +2,6 @@ import { Configuration, Value } from '@itgorillaz/configify';
 
 @Configuration()
 export class SecretsConfiguration {
-  @Value('AZURE_KEY_VAULT_DB_PASSWORD')
+  @Value('BITWARDEN_SECRETS_MANAGER_DB_PASSWORD')
   dbPassword: string;
 }

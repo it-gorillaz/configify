@@ -9,6 +9,7 @@ To run this example, make sure you have your dev environment setup:
 Run the application
 
 ```
+export BWS_ACCESS_TOKEN=your-access-token
 npm install && npm run start
 ```
 

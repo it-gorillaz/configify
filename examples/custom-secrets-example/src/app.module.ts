@@ -3,7 +3,7 @@ import {
   RemoteConfigurationResolver,
 } from '@itgorillaz/configify';
 import { Module } from '@nestjs/common';
-import { Axios } from 'axios';
+import * as Axios from 'axios';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CustomConfigurationResolver } from './custom-configuration.resolver';
@@ -14,9 +14,9 @@ import { CustomConfigurationResolver } from './custom-configuration.resolver';
       secretsResolverStrategies: [
         new RemoteConfigurationResolver(
           new CustomConfigurationResolver(
-            process.env.CUSTOM_SECRET_URL ||
+            process.env.MOCK_SERVER_URL ||
               'http://mockserver-configify:1080/secrets',
-            new Axios(),
+            Axios.default,
           ),
         ),
       ],

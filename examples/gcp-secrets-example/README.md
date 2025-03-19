@@ -10,6 +10,7 @@ To run this example, make sure you have your dev environment setup:
 Run the application
 
 ```
+gcloud auth application-default login
 npm install && npm run start
 ```
 
