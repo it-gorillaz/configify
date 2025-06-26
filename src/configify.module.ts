@@ -1,5 +1,5 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { validateSync } from 'class-validator';
+import { validateSync, ValidatorOptions } from 'class-validator';
 import * as fs from 'fs';
 import { resolve } from 'path';
 import {
@@ -29,6 +29,15 @@ import { Variables } from './interpolation/variables';
  */
 @Module({})
 export class ConfigifyModule {
+  /**
+   * class-validator options used to validate the configuration objects.
+   * The `forbidUnknownValues` must be false in order to not fail the validation
+   * when the configuration class has no validation decorated attributes.
+   */
+  private static readonly VALIDATION_OPTIONS: ValidatorOptions = {
+    forbidUnknownValues: false,
+  };
+
   /**
    * The default configuration files.
    * If no configuration files are provided this module will
@@ -140,7 +149,7 @@ export class ConfigifyModule {
         instance[attribute] = value;
       }
 
-      const errors = validateSync(instance);
+      const errors = validateSync(instance, this.VALIDATION_OPTIONS);
       if (errors && errors.length) {
         throw new Error(
           `validation constraints violated:\n${errors
