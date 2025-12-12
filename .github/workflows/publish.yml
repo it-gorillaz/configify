@@ -16,6 +16,8 @@ jobs:
         with:
           node-version: '21.x'
           registry-url: 'https://registry.npmjs.org'
+          always-auth: true
+          scope: '@itgorillaz'
       - name: Install dependencies and build
         run: npm ci && npm run build
       - name: Copy files for distribution
