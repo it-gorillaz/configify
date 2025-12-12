@@ -1,41 +1,13 @@
 {
-  "name": "@itgorillaz/configify",
-  "version": "4.0.1",
-  "description": "NestJS Config on Steroids",
   "author": "tommelo",
-  "private": false,
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/it-gorillaz/configify.git"
-  },
-  "keywords": [
-    "nestjs",
-    "config",
-    "yml",
-    ".env"
-  ],
   "bugs": {
     "url": "https://github.com/it-gorillaz/configify/issues"
-  },
-  "homepage": "https://github.com/it-gorillaz/configify#readme",
-  "scripts": {
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest --config ./test/jest.config.json --coverage --silent=false --verbose --runInBand"
   },
   "dependencies": {
     "dotenv": "^17.0.0",
     "js-yaml": "^4.1.0"
   },
-  "peerDependencies": {
-    "@nestjs/common": "^9.0.0 || ^10.0.0 || ^11.0.0",
-    "@nestjs/core": "^9.0.0 || ^10.0.0 || ^11.0.0",
-    "class-validator": "^0.14.0",
-    "reflect-metadata": "^0.1.13 || ^0.2.0",
-    "rxjs": "^7.2.0"
-  },
+  "description": "NestJS Config on Steroids",
   "devDependencies": {
     "@aws-sdk/client-secrets-manager": "^3.454.0",
     "@aws-sdk/client-ssm": "^3.461.0",
@@ -66,21 +38,49 @@
     "tsconfig-paths": "4.2.0",
     "typescript": "^5.4.3"
   },
+  "homepage": "https://github.com/it-gorillaz/configify#readme",
   "jest": {
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
     "moduleFileExtensions": [
       "js",
       "json",
       "ts"
     ],
     "rootDir": "src",
+    "testEnvironment": "node",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  }
+    }
+  },
+  "keywords": [
+    "nestjs",
+    "config",
+    "yml",
+    ".env"
+  ],
+  "license": "MIT",
+  "name": "@itgorillaz/configify",
+  "peerDependencies": {
+    "@nestjs/common": "^9.0.0 || ^10.0.0 || ^11.0.0",
+    "@nestjs/core": "^9.0.0 || ^10.0.0 || ^11.0.0",
+    "class-validator": "^0.14.0",
+    "reflect-metadata": "^0.1.13 || ^0.2.0",
+    "rxjs": "^7.2.0"
+  },
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/it-gorillaz/configify.git"
+  },
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest --config ./test/jest.config.json --coverage --silent=false --verbose --runInBand"
+  },
+  "version": "4.0.2"
 }
