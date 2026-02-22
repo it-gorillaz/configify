@@ -24,7 +24,7 @@
     "@azure/keyvault-secrets": "^4.9.0",
     "@itgorillaz/configify": "^4.0.0-alpha.0",
     "@nestjs/common": "^11.0.1",
-    "@nestjs/core": "^11.0.1",
+    "@nestjs/core": "^11.1.14",
     "@nestjs/platform-express": "^11.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
