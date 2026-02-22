@@ -17,49 +17,69 @@ updates:
     directory: '/examples/aws-secrets-example'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 1
     commit-message:
       prefix: 'maint'
     labels:
       - 'dependabot'
       - 'examples'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
   - package-ecosystem: npm
     directory: '/examples/azure-secrets-example'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 1
     commit-message:
       prefix: 'maint'
     labels:
       - 'dependabot'
       - 'examples'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
   - package-ecosystem: npm
     directory: '/examples/bitwarden-secrets-example'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 1
     commit-message:
       prefix: 'maint'
     labels:
       - 'dependabot'
       - 'examples'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
   - package-ecosystem: npm
     directory: '/examples/custom-secrets-example'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 1
     commit-message:
       prefix: 'maint'
     labels:
       - 'dependabot'
       - 'examples'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
   - package-ecosystem: npm
     directory: '/examples/gcp-secrets-example'
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 1
     commit-message:
       prefix: 'maint'
     labels:
       - 'dependabot'
       - 'examples'
+    groups:
+      dependencies:
+        patterns:
+          - '*'
