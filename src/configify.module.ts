@@ -9,6 +9,7 @@ import {
   ConfigurationRegistry,
   DefaultConfigifyModuleOptions,
 } from './configuration';
+import { REQUIRED_ARGS_CONSTRUCTOR_METADATA } from './decorators';
 import { Variables } from './interpolation/variables';
 
 /**
@@ -128,14 +129,20 @@ export class ConfigifyModule {
 
     const registry = ConfigurationRegistry.getRegistry();
     for (const ConfigType of registry) {
-      const instance = new ConfigType();
+      const prototype = ConfigType.prototype;
+      const requiresArgsConstructor = !!Reflect.getMetadata(
+        REQUIRED_ARGS_CONSTRUCTOR_METADATA,
+        ConfigType,
+      );
 
       const attributes =
-        ConfigurationRegistry.getValueDecoratedAttributes(instance);
+        ConfigurationRegistry.getValueDecoratedAttributes(prototype);
 
+      const ctorArgs: Record<string, unknown> = {};
+      const target = requiresArgsConstructor ? ctorArgs : new ConfigType();
       for (const attribute of attributes) {
         const metadata = ConfigurationRegistry.getValueDecoratedKey(
-          instance,
+          prototype,
           attribute,
         );
 
@@ -146,8 +153,12 @@ export class ConfigifyModule {
 
         const value = parse ? parse(defaultValue) : defaultValue;
 
-        instance[attribute] = value;
+        target[attribute] = value;
       }
+
+      const instance = requiresArgsConstructor
+        ? new ConfigType(target)
+        : target;
 
       const errors = validateSync(instance, this.VALIDATION_OPTIONS);
       if (errors && errors.length) {
