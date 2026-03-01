@@ -4,15 +4,25 @@ import {
   systemsManagerSendMock,
 } from './mock/aws.mock';
 
-import { ValueProvider } from '@nestjs/common';
+import { DynamicModule, ValueProvider } from '@nestjs/common';
 import { resolve } from 'path';
 import { ConfigifyModule } from '../src';
 import { AwsSecretsResolverFactory } from '../src/configuration/resolvers/aws';
+import { ArgsConstructorConfiguration } from './config/args-constructor.configuration';
 import { ComplexDotEnvConfiguration } from './config/complex-dot-env.configuration';
 import { ComplexJsonConfiguration } from './config/complex-json.configuration';
 import { ComplexYmlConfiguration } from './config/complex-yml.configuration';
 
 describe('ConfigifyModule', () => {
+  const findFirstValueProvider = (
+    module: DynamicModule,
+    className: string,
+  ): ValueProvider => {
+    return module.providers?.filter(
+      (p) => (p as ValueProvider).useValue.constructor.name === className,
+    )[0] as ValueProvider;
+  };
+
   beforeEach(() => {
     secretsManagerSendMock.mockReset();
     systemsManagerSendMock.mockReset();
@@ -40,11 +50,10 @@ describe('ConfigifyModule', () => {
         ],
       });
 
-      const provider = module.providers?.filter(
-        (p) =>
-          (p as ValueProvider).useValue.constructor.name ===
-          ComplexDotEnvConfiguration.name,
-      )[0] as ValueProvider;
+      const provider = findFirstValueProvider(
+        module,
+        ComplexDotEnvConfiguration.name,
+      );
 
       expect(provider.useValue).toEqual({
         anyKey: 'ANY_VALUE',
@@ -81,11 +90,10 @@ describe('ConfigifyModule', () => {
         ],
       });
 
-      const provider = module.providers?.filter(
-        (p) =>
-          (p as ValueProvider).useValue.constructor.name ===
-          ComplexYmlConfiguration.name,
-      )[0] as ValueProvider;
+      const provider = findFirstValueProvider(
+        module,
+        ComplexYmlConfiguration.name,
+      );
 
       expect(provider.useValue).toEqual({
         anyKey: 'any-value',
@@ -122,11 +130,10 @@ describe('ConfigifyModule', () => {
         ],
       });
 
-      const provider = module.providers?.filter(
-        (p) =>
-          (p as ValueProvider).useValue.constructor.name ===
-          ComplexJsonConfiguration.name,
-      )[0] as ValueProvider;
+      const provider = findFirstValueProvider(
+        module,
+        ComplexJsonConfiguration.name,
+      );
 
       expect(provider.useValue).toEqual({
         anyKey: 'any-value',
@@ -140,6 +147,23 @@ describe('ConfigifyModule', () => {
         azureKeyVaultSecret: 'test-azure-secret',
         defaultBoolean: true,
         parsedDefaultValue: 1,
+      });
+    });
+
+    it('should provide configuration with constructor args injected', async () => {
+      const file = resolve(process.cwd(), 'test/config/.basic.env');
+      const module = await ConfigifyModule.forRootAsync({
+        configFilePath: file,
+      });
+
+      const provider = findFirstValueProvider(
+        module,
+        ArgsConstructorConfiguration.name,
+      );
+
+      expect(provider.useValue).toEqual({
+        testEnvOne: 'ANY_VALUE_ONE',
+        testEnvTwo: 'ANY_VALUE_TWO',
       });
     });
   });
