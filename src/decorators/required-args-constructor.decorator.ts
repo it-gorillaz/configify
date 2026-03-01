@@ -12,7 +12,7 @@ export const REQUIRED_ARGS_CONSTRUCTOR_METADATA = Symbol.for(
  * @returns {ClassDecorator} the class decorator function to apply the metadata to the target class.
  */
 export function RequiredArgsConstructor(): ClassDecorator {
-  return (target: Function) => {
+  return (target: object) => {
     Reflect.defineMetadata(REQUIRED_ARGS_CONSTRUCTOR_METADATA, true, target);
   };
 }
