@@ -6,6 +6,16 @@
 <p align="center">NestJS config on steroids</p>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/@itgorillaz/configify"><img src="https://img.shields.io/npm/v/@itgorillaz/configify?logo=npm&label=npm" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/@itgorillaz/configify"><img src="https://img.shields.io/npm/dm/@itgorillaz/configify?logo=npm&label=downloads" alt="npm downloads" /></a>
+  <a href="https://github.com/it-gorillaz/configify/blob/master/LICENSE"><img src="https://img.shields.io/github/license/it-gorillaz/configify" alt="License" /></a>
+  <a href="https://github.com/it-gorillaz/configify/releases"><img src="https://img.shields.io/github/v/release/it-gorillaz/configify?sort=semver" alt="GitHub release" /></a>
+  <a href="https://github.com/it-gorillaz/configify/issues"><img src="https://img.shields.io/github/issues/it-gorillaz/configify" alt="Open issues" /></a>
+  <a href="https://github.com/it-gorillaz/configify/commits"><img src="https://img.shields.io/github/last-commit/it-gorillaz/configify" alt="Last commit" /></a>
+</p>
+
+
+<p align="center">
   <a href="https://buymeacoffee.com/tommelo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 </p>
 
