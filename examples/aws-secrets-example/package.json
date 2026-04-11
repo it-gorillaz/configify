@@ -20,8 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@aws-sdk/client-secrets-manager": "^3.1024.0",
-    "@aws-sdk/client-ssm": "^3.1024.0",
+    "@aws-sdk/client-secrets-manager": "^3.1029.0",
+    "@aws-sdk/client-ssm": "^3.1029.0",
     "@itgorillaz/configify": "^4.1.1",
     "@nestjs/common": "^11.1.18",
     "@nestjs/core": "^11.1.18",
@@ -34,21 +34,21 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
-    "@nestjs/cli": "^11.0.17",
+    "@nestjs/cli": "^11.0.19",
     "@nestjs/schematics": "^11.0.10",
     "@nestjs/testing": "^11.1.18",
     "@swc/cli": "^0.8.1",
     "@swc/core": "^1.15.24",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
     "@types/supertest": "^7.2.0",
     "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "globals": "^17.4.0",
     "jest": "^30.3.0",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "source-map-support": "^0.5.21",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.9",
@@ -56,7 +56,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^6.0.2",
-    "typescript-eslint": "^8.58.0"
+    "typescript-eslint": "^8.58.1"
   },
   "jest": {
     "moduleFileExtensions": [
