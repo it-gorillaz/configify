@@ -66,7 +66,7 @@ export class ConfigifyModule {
   static async forRootAsync(
     options: ConfigifyModuleOptions = {},
   ): Promise<DynamicModule> {
-    const settings = { ...options, ...DefaultConfigifyModuleOptions };
+    const settings = { ...DefaultConfigifyModuleOptions, ...options };
     const files = this.resolveConfigurationFiles(settings.configFilePath);
 
     const envVars = settings.ignoreEnvVars ? {} : process.env;
