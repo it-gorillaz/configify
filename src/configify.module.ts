@@ -74,7 +74,7 @@ export class ConfigifyModule {
       ? {}
       : this.parseConfigurationFiles(files);
 
-    const container = { ...envVars, ...fromFile };
+    const container = { ...fromFile, ...envVars };
     const secrets = await this.runSecretsResolverPipeline(container, settings);
     const configuration = { ...container, ...secrets };
 
