@@ -66,7 +66,7 @@ export class ConfigifyModule {
   static async forRootAsync(
     options: ConfigifyModuleOptions = {},
   ): Promise<DynamicModule> {
-    const settings = { ...options, ...DefaultConfigifyModuleOptions };
+    const settings = { ...DefaultConfigifyModuleOptions, ...options };
     const files = this.resolveConfigurationFiles(settings.configFilePath);
 
     const envVars = settings.ignoreEnvVars ? {} : process.env;
@@ -74,7 +74,7 @@ export class ConfigifyModule {
       ? {}
       : this.parseConfigurationFiles(files);
 
-    const container = { ...envVars, ...fromFile };
+    const container = { ...fromFile, ...envVars };
     const secrets = await this.runSecretsResolverPipeline(container, settings);
     const configuration = { ...container, ...secrets };
 
