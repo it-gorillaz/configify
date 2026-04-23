@@ -35,11 +35,8 @@ describe('ConfigifyModule', () => {
   describe('forRootAsync()', () => {
     it('should provide complex .env configuration', async () => {
       const secret = 'test';
-
       secretsManagerSendMock.mockResolvedValue({ SecretString: secret });
-      systemsManagerSendMock.mockResolvedValue({
-        Parameter: { Value: secret },
-      });
+      systemsManagerSendMock.mockResolvedValue({ Parameter: { Value: secret } });
 
       const file = resolve(process.cwd(), 'test/config/.complex.env');
       const module = await ConfigifyModule.forRootAsync({
@@ -50,11 +47,7 @@ describe('ConfigifyModule', () => {
         ],
       });
 
-      const provider = findFirstValueProvider(
-        module,
-        ComplexDotEnvConfiguration.name,
-      );
-
+      const provider = findFirstValueProvider(module, ComplexDotEnvConfiguration.name);
       expect(provider.useValue).toEqual({
         anyKey: 'ANY_VALUE',
         awsSecretsManagerTest: secret,
@@ -65,9 +58,7 @@ describe('ConfigifyModule', () => {
         expandedEnv: secret,
         numberContent: 1234,
         booleanContent: true,
-        jsonContent: {
-          host: 'localhost',
-        },
+        jsonContent: { host: 'localhost' },
         defaultValue: 'test_default_value',
         parsedDefaultValue: 1,
       });
@@ -75,11 +66,8 @@ describe('ConfigifyModule', () => {
 
     it('should provide complex yml configuration', async () => {
       const secret = 'test';
-
       secretsManagerSendMock.mockResolvedValue({ SecretString: secret });
-      systemsManagerSendMock.mockResolvedValue({
-        Parameter: { Value: secret },
-      });
+      systemsManagerSendMock.mockResolvedValue({ Parameter: { Value: secret } });
 
       const file = resolve(process.cwd(), 'test/config/.complex.yml');
       const module = await ConfigifyModule.forRootAsync({
@@ -90,11 +78,7 @@ describe('ConfigifyModule', () => {
         ],
       });
 
-      const provider = findFirstValueProvider(
-        module,
-        ComplexYmlConfiguration.name,
-      );
-
+      const provider = findFirstValueProvider(module, ComplexYmlConfiguration.name);
       expect(provider.useValue).toEqual({
         anyKey: 'any-value',
         awsSecretsManagerSecret: secret,
@@ -105,9 +89,7 @@ describe('ConfigifyModule', () => {
         numberContent: 1234,
         booleanContent: true,
         expandedEnv: secret,
-        jsonContent: {
-          host: 'localhost',
-        },
+        jsonContent: { host: 'localhost' },
         defaultValue: 'test_default_value',
         parsedDefaultValue: 1,
       });
@@ -115,11 +97,8 @@ describe('ConfigifyModule', () => {
 
     it('should provide complex json configuration', async () => {
       const secret = 'test';
-
       secretsManagerSendMock.mockResolvedValue({ SecretString: secret });
-      systemsManagerSendMock.mockResolvedValue({
-        Parameter: { Value: secret },
-      });
+      systemsManagerSendMock.mockResolvedValue({ Parameter: { Value: secret } });
 
       const file = resolve(process.cwd(), 'test/config/.complex.json');
       const module = await ConfigifyModule.forRootAsync({
@@ -130,11 +109,7 @@ describe('ConfigifyModule', () => {
         ],
       });
 
-      const provider = findFirstValueProvider(
-        module,
-        ComplexJsonConfiguration.name,
-      );
-
+      const provider = findFirstValueProvider(module, ComplexJsonConfiguration.name);
       expect(provider.useValue).toEqual({
         anyKey: 'any-value',
         defaultValue: 'my-default-value',
@@ -152,19 +127,73 @@ describe('ConfigifyModule', () => {
 
     it('should provide configuration with constructor args injected', async () => {
       const file = resolve(process.cwd(), 'test/config/.basic.env');
-      const module = await ConfigifyModule.forRootAsync({
-        configFilePath: file,
-      });
+      const module = await ConfigifyModule.forRootAsync({ configFilePath: file });
 
-      const provider = findFirstValueProvider(
-        module,
-        ArgsConstructorConfiguration.name,
-      );
-
+      const provider = findFirstValueProvider(module, ArgsConstructorConfiguration.name);
       expect(provider.useValue).toEqual({
         testEnvOne: 'ANY_VALUE_ONE',
         testEnvTwo: 'ANY_VALUE_TWO',
       });
+    });
+  });
+
+  describe('forRootAsync() options and merging', () => {
+    let originalEnv: NodeJS.ProcessEnv;
+
+    beforeEach(() => {
+      originalEnv = { ...process.env };
+      delete process.env.TEST_ENV_ONE;
+      delete process.env.TEST_ENV_TWO;
+    });
+
+    afterEach(() => {
+      process.env = originalEnv;
+    });
+
+    it('should give precedence to provided options over defaults', async () => {
+      const file = resolve(process.cwd(), 'test/config/.basic.env');
+      const module = await ConfigifyModule.forRootAsync({
+        configFilePath: file,
+        ignoreConfigFile: true,
+      });
+
+      const provider = findFirstValueProvider(module, ArgsConstructorConfiguration.name);
+      expect(provider.useValue).toEqual(
+        expect.not.objectContaining({
+          testEnvOne: 'ANY_VALUE_ONE',
+          testEnvTwo: 'ANY_VALUE_TWO',
+        }),
+      );
+    });
+
+    it('should give precedence to env vars over config file values', async () => {
+      process.env.TEST_ENV_ONE = 'FROM_ENV';
+
+      const file = resolve(process.cwd(), 'test/config/.basic.env');
+      const module = await ConfigifyModule.forRootAsync({ configFilePath: file });
+
+      const provider = findFirstValueProvider(module, ArgsConstructorConfiguration.name);
+      expect(provider.useValue).toEqual(
+        expect.objectContaining({
+          testEnvOne: 'FROM_ENV',
+          testEnvTwo: 'ANY_VALUE_TWO',
+        }),
+      );
+    });
+
+    it('should ignore env vars when ignoreEnvVars is true', async () => {
+      process.env.TEST_ENV_ONE = 'FROM_ENV';
+
+      const file = resolve(process.cwd(), 'test/config/.basic.env');
+      const module = await ConfigifyModule.forRootAsync({
+        configFilePath: file,
+        ignoreEnvVars: true,
+      });
+
+      const provider = findFirstValueProvider(module, ArgsConstructorConfiguration.name);
+      expect(provider.useValue).toEqual(
+        expect.objectContaining({ testEnvOne: 'ANY_VALUE_ONE' }),
+      );
     });
   });
 });

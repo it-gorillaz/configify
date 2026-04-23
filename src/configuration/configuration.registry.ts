@@ -1,7 +1,7 @@
 import {
-  ValueDecoratedKey,
   VALUE_METADATA,
   VALUE_PROPERTIES_METADATA,
+  ValueDecoratedKey,
 } from '../decorators';
 
 /**
@@ -19,6 +19,11 @@ export class ConfigurationRegistry {
    * @param {any} type the class type
    */
   static registerTarget(type: any): void {
+    if (this.registry.includes(type)) {
+      throw new Error(
+        `Duplicate configuration target registration: ${type.name}`,
+      );
+    }
     this.registry.push(type);
   }
 
@@ -51,7 +56,7 @@ export class ConfigurationRegistry {
    * @returns {string[]} the list of attribute names
    */
   static getValueDecoratedAttributes(target: any): string[] {
-    return target[VALUE_PROPERTIES_METADATA];
+    return target[VALUE_PROPERTIES_METADATA] ?? [];
   }
 
   /**

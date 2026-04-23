@@ -27,7 +27,13 @@ export class ConfigurationParserFactory {
    */
   static getParser(file: string): ConfigurationParser {
     const ext = this.getFileExt(file) as keyof typeof this.parsers;
-    return this.parsers[ext];
+    const parser = this.parsers[ext];
+    if (!parser) {
+      throw new Error(
+        `Unsupported configuration file extension: ".${ext}" (file: "${file}")`,
+      );
+    }
+    return parser;
   }
 
   /**
@@ -37,7 +43,7 @@ export class ConfigurationParserFactory {
    * @returns {boolean}     true if a parser is found, false otherwise
    */
   static supports(file: string): boolean {
-    const ext = this.getFileExt(file);
+    const ext = this.getFileExt(file) as keyof typeof this.parsers;
     return ext ? this.parsers.hasOwnProperty(ext) : false;
   }
 

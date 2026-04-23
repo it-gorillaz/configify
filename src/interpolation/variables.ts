@@ -59,6 +59,7 @@ export class Variables {
   private static interpolate(
     value: unknown,
     record: Record<string, unknown>,
+    visited: Set<string> = new Set(),
   ): unknown {
     if (typeof value !== 'string') return value;
 
@@ -74,9 +75,15 @@ export class Variables {
 
     if (match != null) {
       const [, group, variableName, defaultValue] = match;
+      if (visited.has(variableName)) {
+        throw new Error(
+          `Circular variable reference detected: ${[...visited, variableName].join(' -> ')}`,
+        );
+      }
       return this.interpolate(
         value.replace(group, defaultValue || `${record[variableName]}` || ''),
         record,
+        new Set([...visited, variableName]),
       );
     }
 
