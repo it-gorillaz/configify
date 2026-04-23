@@ -136,7 +136,7 @@ export class ConfigifyModule {
       );
 
       const attributes =
-        ConfigurationRegistry.getValueDecoratedAttributes(prototype);
+        ConfigurationRegistry.getValueDecoratedAttributes(prototype) ?? [];
 
       const ctorArgs: Record<string, unknown> = {};
       const target = requiresArgsConstructor ? ctorArgs : new ConfigType();
@@ -149,7 +149,7 @@ export class ConfigifyModule {
         const parse = metadata.options?.parse;
 
         const defaultValue =
-          process.env[metadata.key] || metadata.options?.default;
+          process.env[metadata.key] ?? metadata.options?.default;
 
         const value = parse ? parse(defaultValue) : defaultValue;
 
@@ -194,8 +194,8 @@ export class ConfigifyModule {
     path: string[] = [],
     target: Record<string, any> = {},
   ) {
-    if (typeof source === 'object') {
-      for (const key in source) {
+    if (source !== null && !Array.isArray(source) && typeof source === 'object') {
+      for (const key of Object.keys(source)) {
         this.flattenObjectKeys(source[key], [...path, key], target);
       }
     } else {

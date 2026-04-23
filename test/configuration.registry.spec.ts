@@ -3,42 +3,45 @@ import { BasicDotEnvConfiguration } from '../test/config/basic-dot-env.configura
 
 describe('ConfigurationRegistry', () => {
   describe('getRegistry()', () => {
-    it('should contain configuration targets', () => {
+    it('should contain registered configuration targets', () => {
       const registry = ConfigurationRegistry.getRegistry();
-      expect(registry.length).toEqual(1);
-      expect(registry[0].name).toEqual(BasicDotEnvConfiguration.name);
+      expect(registry).toContain(BasicDotEnvConfiguration);
+    });
+  });
+
+  describe('registerTarget()', () => {
+    it('should throw on duplicate registration', () => {
+      expect(() =>
+        ConfigurationRegistry.registerTarget(BasicDotEnvConfiguration),
+      ).toThrow(
+        `Duplicate configuration target registration: ${BasicDotEnvConfiguration.name}`,
+      );
     });
   });
 
   describe('getValueDecoratedAttributes()', () => {
-    it('should contain value decorated attributes', () => {
-      const registry = ConfigurationRegistry.getRegistry();
+    it('should return the list of value-decorated attribute names', () => {
       const attributes = ConfigurationRegistry.getValueDecoratedAttributes(
-        new registry[0](),
+        new BasicDotEnvConfiguration(),
       );
-      expect(attributes).toEqual(
-        expect.arrayContaining(['testEnvOne', 'testEnvTwo']),
-      );
+      expect(attributes).toEqual(expect.arrayContaining(['testEnvOne', 'testEnvTwo']));
+    });
+
+    it('should return an empty array for a class with no decorated attributes', () => {
+      class PlainClass {}
+      expect(ConfigurationRegistry.getValueDecoratedAttributes(new PlainClass())).toEqual([]);
     });
   });
 
   describe('getValueDecoratedKey()', () => {
-    it('should contain value decorated attributes', () => {
-      const registry = ConfigurationRegistry.getRegistry();
-      const instance = new registry[0]();
+    it('should return the metadata for each decorated attribute', () => {
+      const instance = new BasicDotEnvConfiguration();
 
-      const metadataOne = ConfigurationRegistry.getValueDecoratedKey(
-        instance,
-        'testEnvOne',
-      );
+      const metadataOne = ConfigurationRegistry.getValueDecoratedKey(instance, 'testEnvOne');
+      const metadataTwo = ConfigurationRegistry.getValueDecoratedKey(instance, 'testEnvTwo');
 
-      const metadataTwo = ConfigurationRegistry.getValueDecoratedKey(
-        instance,
-        'testEnvTwo',
-      );
-
-      expect(metadataOne.key).toContain('TEST_ENV_ONE');
-      expect(metadataTwo.key).toContain('TEST_ENV_TWO');
+      expect(metadataOne.key).toBe('TEST_ENV_ONE');
+      expect(metadataTwo.key).toBe('TEST_ENV_TWO');
     });
   });
 });

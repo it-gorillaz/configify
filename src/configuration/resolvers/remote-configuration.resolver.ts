@@ -97,6 +97,19 @@ export class RemoteConfigurationResolver implements ConfigurationResolver {
   ): Promise<ResolvedValue>[] {
     const promises: Promise<ResolvedValue>[] = [];
     for (const [key, value] of Object.entries(config)) {
+      if (typeof value !== 'string' || !value.trim()) {
+        promises.push(
+          Promise.resolve({
+            id: value,
+            key,
+            error: new Error(
+              `Invalid secret ID: expected a non-empty string, got ${JSON.stringify(value)}`,
+            ),
+            success: false,
+          }),
+        );
+        continue;
+      }
       promises.push(this.resolveSecretValue(key, value));
     }
     return promises;
