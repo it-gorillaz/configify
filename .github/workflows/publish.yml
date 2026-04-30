@@ -19,7 +19,7 @@ jobs:
           always-auth: true
           scope: '@itgorillaz'
       - name: Update npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@11.6.2
       - name: Install dependencies and build
         run: npm ci && npm run build
       - name: Copy files for distribution
