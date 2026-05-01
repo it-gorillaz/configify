@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Get version
+        id: package
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.package.outputs.version }}
+          name: v${{ steps.package.outputs.version }}
+          generate_release_notes: true
+          prerelease: ${{ contains(steps.package.outputs.version, '-') }}

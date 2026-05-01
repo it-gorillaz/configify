@@ -1,0 +1,57 @@
+name: Pre Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        description: 'Release type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pre-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Bump version
+        run: npm version ${{ github.event.inputs.release-type }} --no-git-tag-version
+
+      - name: Get version
+        id: package
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'maint: bump version to v${{ steps.package.outputs.version }}'
+          title: 'chore: release v${{ steps.package.outputs.version }}'
+          body: |
+            ## Release v${{ steps.package.outputs.version }}
+
+            This PR bumps the version to `v${{ steps.package.outputs.version }}`.
+
+            **Release type:** `${{ github.event.inputs.release-type }}`
+
+            Merging this PR will automatically create a GitHub release and trigger the npm publish workflow.
+          branch: release/v${{ steps.package.outputs.version }}
+          labels: release
