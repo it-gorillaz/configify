@@ -1,16 +1,24 @@
 name: Publish to NPM
+
 on:
-  release:
-    types: [created]
+  workflow_run:
+    workflows:
+      - Release
+    types:
+      - completed
+
 permissions:
   id-token: write
   contents: read
+
 jobs:
-  build:
+  publish:
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -18,11 +26,19 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
           scope: '@itgorillaz'
+
       - name: Update npm
         run: npm install -g npm@11.6.2
+
       - name: Install dependencies and build
         run: npm ci && npm run build
+
       - name: Copy files for distribution
         run: cp package.json README.md LICENSE dist
+
+      - name: Get version
+        id: package
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
       - name: Publish package on NPM
-        run: npm publish ./dist --access public
+        run: npm publish ./dist --access public ${{ contains(steps.package.outputs.version, '-') && '--tag next' || '' }}
