@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "dotenv": "^17.3.1",
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^5.2.1"
   },
   "description": "NestJS Config on Steroids",
   "devDependencies": {
@@ -20,7 +20,7 @@
     "@nestjs/testing": "^11.1.15",
     "@types/jest": "30.0.0",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "26.0.0",
+    "@types/node": "26.1.1",
     "@types/supertest": "^7.2.0",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
@@ -38,7 +38,7 @@
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "homepage": "https://github.com/it-gorillaz/configify#readme",
   "jest": {
