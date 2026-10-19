@@ -251,6 +251,8 @@ export class DatabaseConfiguration {
 }
 ```
 
+The default value is used as is when the key is not found. It is not passed to `parse`, which only receives values from env vars and config files.
+
 ---
 
 ## Variable Expansion

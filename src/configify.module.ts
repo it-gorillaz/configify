@@ -146,14 +146,13 @@ export class ConfigifyModule {
           attribute,
         );
 
-        const parse = metadata.options?.parse;
-
-        const defaultValue =
-          process.env[metadata.key] ?? metadata.options?.default;
-
-        const value = parse ? parse(defaultValue) : defaultValue;
-
-        target[attribute] = value;
+        const value = process.env[metadata.key];
+        if (value === undefined) {
+          target[attribute] = metadata.options?.default;
+        } else {
+          const parse = metadata.options?.parse;
+          target[attribute] = parse ? parse(value) : value;
+        }
       }
 
       const instance = requiresArgsConstructor

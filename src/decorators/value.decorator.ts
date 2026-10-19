@@ -14,18 +14,20 @@ export const VALUE_PROPERTIES_METADATA = Symbol.for('__properties__');
  * The value options.
  * Allows custom parsing to configuration values
  */
-export interface ValueOptions {
+export interface ValueOptions<T = unknown> {
   /**
    * Parses the configuration value.
+   * It is not called for the default value.
    * @param value
    * @returns parsed value
    */
-  parse?: (value: any) => unknown;
+  parse?: (value: string) => T;
 
   /**
    * Sets a default value if the configuration key is not found.
+   * The default value is used as is, without parsing.
    */
-  default?: any;
+  default?: T;
 }
 
 /**
@@ -46,9 +48,9 @@ export interface ValueDecoratedKey {
  * @param   {ValueOptions}      options custom options
  * @returns {PropertyDecorator}         the property decorator
  */
-export const Value = (
+export const Value = <T>(
   key: string,
-  options?: ValueOptions,
+  options?: ValueOptions<T>,
 ): PropertyDecorator => {
   return (target: object, property: string | symbol) => {
     ConfigurationRegistry.registerAttribute(target, property);

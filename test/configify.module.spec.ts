@@ -61,6 +61,7 @@ describe('ConfigifyModule', () => {
         jsonContent: { host: 'localhost' },
         defaultValue: 'test_default_value',
         parsedDefaultValue: 1,
+        parsedDefaultBoolean: true,
       });
     });
 
@@ -92,6 +93,7 @@ describe('ConfigifyModule', () => {
         jsonContent: { host: 'localhost' },
         defaultValue: 'test_default_value',
         parsedDefaultValue: 1,
+        parsedDefaultBoolean: true,
       });
     });
 
@@ -122,6 +124,7 @@ describe('ConfigifyModule', () => {
         azureKeyVaultSecret: 'test-azure-secret',
         defaultBoolean: true,
         parsedDefaultValue: 1,
+        parsedDefaultBoolean: true,
       });
     });
 
