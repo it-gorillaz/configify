@@ -30,17 +30,21 @@ export class ComplexYmlConfiguration {
   @Value('number-content', { parse: parseInt })
   numberContent: number;
 
-  @Value('boolean-content', { parse: (value: any) => !!value })
+  @Value('boolean-content', { parse: (value: string) => value === 'true' })
   booleanContent: boolean;
 
-  @Value('json-content', {
-    parse: (value: any) => JSON.parse(value),
-  })
+  @Value('json-content', { parse: JSON.parse })
   jsonContent: YmlJsonContent;
 
   @Value('non-existing-key', { default: 'test_default_value' })
   defaultValue: string;
 
-  @Value('non-existing-key', { parse: parseInt, default: '1' })
+  @Value('non-existing-key', { parse: parseInt, default: 1 })
   parsedDefaultValue: number;
+
+  @Value('non-existing-key', {
+    parse: (value: string) => value === 'true',
+    default: true,
+  })
+  parsedDefaultBoolean: boolean;
 }

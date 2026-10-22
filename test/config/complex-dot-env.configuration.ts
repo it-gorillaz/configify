@@ -30,15 +30,21 @@ export class ComplexDotEnvConfiguration {
   @Value('NUMBER_CONTENT', { parse: parseInt })
   numberContent: number;
 
-  @Value('BOOLEAN_CONTENT', { parse: (value: any) => !!value })
+  @Value('BOOLEAN_CONTENT', { parse: (value: string) => value === 'true' })
   booleanContent: boolean;
 
-  @Value('JSON_CONTENT', { parse: (value: any) => JSON.parse(value) })
+  @Value('JSON_CONTENT', { parse: JSON.parse })
   jsonContent: DotEnvJsonContent;
 
   @Value('NON_EXISTING_ENV', { default: 'test_default_value' })
   defaultValue: string;
 
-  @Value('NON_EXISTING_ENV', { parse: parseInt, default: '1' })
+  @Value('NON_EXISTING_ENV', { parse: parseInt, default: 1 })
   parsedDefaultValue: number;
+
+  @Value('NON_EXISTING_ENV', {
+    parse: (value: string) => value === 'true',
+    default: true,
+  })
+  parsedDefaultBoolean: boolean;
 }

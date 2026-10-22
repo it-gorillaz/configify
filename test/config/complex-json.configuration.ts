@@ -11,7 +11,7 @@ export class ComplexJsonConfiguration {
   @Value('number-content', { parse: parseInt })
   numberContent: number;
 
-  @Value('boolean-content', { parse: (value: any) => !!value })
+  @Value('boolean-content', { parse: (value: string) => value === 'true' })
   booleanContent: boolean;
 
   @Value('expanded-secret')
@@ -32,6 +32,12 @@ export class ComplexJsonConfiguration {
   @Value('non-existing-key', { default: true })
   defaultBoolean: boolean;
 
-  @Value('non-existing-key', { parse: parseInt, default: '1' })
+  @Value('non-existing-key', { parse: parseInt, default: 1 })
   parsedDefaultValue: number;
+
+  @Value('non-existing-key', {
+    parse: (value: string) => value === 'true',
+    default: true,
+  })
+  parsedDefaultBoolean: boolean;
 }
